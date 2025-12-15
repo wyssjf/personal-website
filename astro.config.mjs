@@ -2,13 +2,13 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-    // MUST be the full domain root
-    site: 'https://wyssjf.github.io', 
+    // VERCEL FIX: Setting base to '/' tells Astro assets are at the root
+    base: '/', 
     
-    // MUST be the repository name with slashes
-    base: '/personal-website/', 
+    // VERCEL FIX: Remove the GitHub Pages 'site' property entirely
+    // site: 'https://wyssjf.github.io', // DELETE THIS LINE
     
     output: 'static', 
 
-    // ... (any other integrations you have)
+    // ... (keep any other integrations you have below)
 });
