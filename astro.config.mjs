@@ -1,12 +1,12 @@
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import tailwind from "@astrojs/tailwind"; // KEEP YOUR INTEGRATIONS
+import tailwind from "@astrojs/tailwind"; // KEEP YOUR INTEGRATIONS (if you use tailwind)
 
 export default defineConfig({
-    // 1. ADD THIS BACK, BUT POINT TO THE VERCEL ROOT DOMAIN
+    // VERCEL FIX: Provide a valid URL for your code to use for canonical links/sitemap
     site: 'https://personal-website-oaae8htiy-jay-wyss-projects.vercel.app', 
     
-    // 2. KEEP THIS VERCEL FIX
+    // VERCEL FIX: Setting base to '/' tells Astro assets are at the root
     base: '/', 
     
     output: 'static', 
