@@ -1,14 +1,15 @@
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
+import tailwind from "@astrojs/tailwind"; // KEEP YOUR INTEGRATIONS
 
 export default defineConfig({
-    // VERCEL FIX: Setting base to '/' tells Astro assets are at the root
-    base: '/', 
+    // 1. ADD THIS BACK, BUT POINT TO THE VERCEL ROOT DOMAIN
+    site: 'https://personal-website-oaae8htiy-jay-wyss-projects.vercel.app', 
     
-    // VERCEL FIX: Remove the GitHub Pages 'site' property entirely
-    // site: 'https://wyssjf.github.io', // DELETE THIS LINE
+    // 2. KEEP THIS VERCEL FIX
+    base: '/', 
     
     output: 'static', 
 
-    // ... (keep any other integrations you have below)
+    integrations: [tailwind()] // KEEP YOUR INTEGRATIONS
 });
