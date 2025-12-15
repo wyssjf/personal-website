@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* GLOBAL RESET */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    /* --- PALETTE --- */
+    --background: #ffffff;
+    --text-main: #18181b;
+    --text-muted: #52525b;
+    --accent: #7f9c78; /* Sage Green */
+    
+    --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --max-width: 720px;
+
+    /* UPDATED: Now pointing to the Vector SVG file */
+    --city-bg: url('/city-light.svg');
+}
+
+/* 1. Global Reset & Body */
+body {
+    font-family: var(--font-body);
+    font-weight: 300; 
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    background-color: var(--background);
+    color: var(--text-main);
+    font-size: 18px; 
+    line-height: 1.8;
+    min-height: 100vh;
+}
+
+main {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 3em 1em;
+    position: relative;
+}
+
+/* 2. Headings */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-main);
+    line-height: 1.2;
+    font-weight: 500;
+    font-family: 'Libre Baskerville', serif;
+    letter-spacing: -0.025em; 
+}
+
+h1 { font-size: 2.5em; letter-spacing: -0.02em; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.5em; }
+h4 { font-size: 1.25em; }
+
+header h2, header h2 a {
+    font-family: var(--font-body), sans-serif !important;
+    text-decoration: none;
+    letter-spacing: normal;
+}
+
+strong, b { font-weight: 700; }
+
+/* 3. Links */
+a {
+    color: var(--text-main);
+    text-decoration: underline;
+    text-decoration-color: #d4d4d8; 
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--text-main);
+    text-decoration-color: var(--text-main);
+    background: none;
+}
+
+/* 4. Content Elements */
+p { margin-bottom: 1.5em; }
+
+code {
+    padding: 2px 5px;
+    background-color: #f4f4f5;
+    border-radius: 4px;
+    font-family: monospace; 
+    font-size: 0.9em;
+}
+
+pre {
+    padding: 1.5em;
+    background-color: #f4f4f5;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-left: 0;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    height: 6px;
+    background: transparent;
+    opacity: 0.3;
+    margin: 3rem 0;
+}
+
+/* 5. Utilities */
+.sr-only {
+    border: 0; padding: 0; margin: 0; position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px); clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --- DARK MODE --- */
+html.dark {
+    --background: #0f0b1e; 
+    --text-main: #e2e8f0; 
+    --text-muted: #94a3b8;
+    --accent: #c084fc; 
+    
+    /* UPDATED: Switch to Dark Mode Vector SVG */
+    --city-bg: url('/city-dark.svg');
+}
+
+html.dark body {
+    /* Kept the glow, removed the fixed image */
+    background-image: radial-gradient(circle at 50% 0%, rgba(192, 132, 252, 0.15), transparent 60%);
+    background-attachment: fixed;
+}
+
+html.dark img { opacity: 0.9; transition: opacity 0.2s; }
+html.dark img:hover { opacity: 1; }
+
+html.dark pre, html.dark code {
+    background-color: #1e1b2e;
+    color: var(--text-main);
+}

@@ -1,0 +1,81 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`False Start | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+        <style>
+            .error-container {
+                text-align: center;
+                /* More vertical breathing room */
+                padding: 8rem 1rem;
+                min-height: 60vh; /* Ensures it feels centered on the page */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .error-code {
+                font-size: 8rem;
+                font-weight: 800;
+                line-height: 1;
+                color: rgba(var(--accent), 0.2); /* Faded Sage Green */
+                /* Push the headline down */
+                margin: 0 0 1rem 0; 
+            }
+
+            h1 {
+                font-family: 'Libre Baskerville', serif;
+                font-size: 3rem;
+                /* Standard positive margins */
+                margin: 0 0 1.5rem 0;
+                color: var(--text-main);
+            }
+
+            p {
+                font-size: 1.25rem;
+                color: var(--text-muted);
+                max-width: 500px;
+                /* More space before the button */
+                margin-bottom: 3rem; 
+                line-height: 1.6;
+            }
+
+            .back-button {
+                display: inline-block;
+                padding: 1rem 2rem; /* Larger, clickable button area */
+                background: var(--accent);
+                color: white;
+                text-decoration: none;
+                font-weight: bold;
+                border-radius: 4px;
+                transition: opacity 0.2s;
+                font-size: 1.1rem;
+            }
+
+            .back-button:hover {
+                opacity: 0.9;
+            }
+        </style>
+	</head>
+	<body>
+		<Header />
+		<main>
+            <div class="error-container">
+                <div class="error-code">404</div>
+                <h1>False Start.</h1>
+                <p>
+                    You jumped the gun. The page you are looking for doesn't exist, or maybe I moved the finish line.
+                </p>
+                <a href="/" class="back-button">Back to the Blocks</a>
+            </div>
+		</main>
+		<Footer />
+	</body>
+</html>

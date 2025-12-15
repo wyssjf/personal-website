@@ -1,0 +1,241 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE } from '../consts';
+import IntroSplash from '../components/IntroSplash.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Resume | ${SITE_TITLE}`} description="Technology Director & Elite Performance Coach" />
+	</head>
+	<body>
+		<IntroSplash />
+
+        <nav class="resume-toolbar">
+            
+            <div class="toolbar-left">
+                <a href="/" class="back-link">
+                    <span class="arrow">←</span> <span class="text">Back to Site</span>
+                </a>
+            </div>
+            
+            <div class="toolbar-center">
+                <div class="lane-switch">
+                    <button id="btn-corp" class="lane-btn active" title="View Technology Career">
+                        💼 Corporate
+                    </button>
+                    <button id="btn-coach" class="lane-btn" title="View Coaching Career">
+                        ⏱️ Coaching
+                    </button>
+                    <div class="glider"></div>
+                </div>
+            </div>
+
+            <div class="toolbar-right">
+                <a id="btn-download" href="/resume-corporate.pdf" download class="action-btn">
+                    <span class="emoji">📥</span> Download
+                </a>
+            </div>
+        </nav>
+
+        <main class="pdf-container">
+            <iframe 
+                id="pdf-frame" 
+                src="/resume-corporate.pdf" 
+                type="application/pdf">
+            </iframe>
+        </main>
+
+        <script>
+            const btnCorp = document.getElementById('btn-corp');
+            const btnCoach = document.getElementById('btn-coach');
+            const pdfFrame = document.getElementById('pdf-frame');
+            const btnDownload = document.getElementById('btn-download');
+            const laneSwitch = document.querySelector('.lane-switch');
+            
+            function switchLane(lane) {
+                if(lane === 'corp') {
+                    // Update Active State
+                    btnCorp.classList.add('active');
+                    btnCoach.classList.remove('active');
+                    laneSwitch.classList.remove('coach-active'); // Moves glider left
+                    
+                    // Update Content
+                    pdfFrame.src = "/resume-corporate.pdf";
+                    btnDownload.href = "/resume-corporate.pdf";
+                } else {
+                    btnCorp.classList.remove('active');
+                    btnCoach.classList.add('active');
+                    laneSwitch.classList.add('coach-active'); // Moves glider right
+                    
+                    pdfFrame.src = "/resume-coaching.pdf";
+                    btnDownload.href = "/resume-coaching.pdf";
+                }
+            }
+
+            btnCorp.addEventListener('click', () => switchLane('corp'));
+            btnCoach.addEventListener('click', () => switchLane('coach'));
+        </script>
+
+        <style>
+            /* --- GLOBAL LAYOUT --- */
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                background-color: #27272a;
+            }
+
+            /* --- THE GLASS TOOLBAR --- */
+            .resume-toolbar {
+                height: 64px;
+                background-color: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border-bottom: 1px solid rgba(0,0,0,0.06);
+                
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 1.5rem;
+                box-sizing: border-box;
+                z-index: 50;
+                position: relative;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            }
+
+            .toolbar-left, .toolbar-right { flex: 1; display: flex; align-items: center; }
+            .toolbar-right { justify-content: flex-end; }
+            .toolbar-center { flex: 2; display: flex; justify-content: center; }
+
+            /* Back Link */
+            .back-link {
+                text-decoration: none;
+                color: #18181b;
+                font-weight: 600;
+                font-size: 0.95rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                opacity: 0.8;
+                transition: opacity 0.2s;
+            }
+            .back-link:hover { opacity: 1; }
+            .back-link .arrow { color: var(--accent); font-weight: 800; }
+
+            /* --- SEGMENTED CONTROL (Apple Style) --- */
+            .lane-switch {
+                position: relative;
+                background-color: #f4f4f5; 
+                border-radius: 99px; 
+                padding: 4px;
+                display: flex;
+                border: 1px solid rgba(0,0,0,0.04);
+            }
+
+            .lane-btn {
+                position: relative;
+                background: transparent;
+                border: none;
+                padding: 8px 16px; 
+                border-radius: 99px;
+                font-family: inherit;
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: #71717a; 
+                cursor: pointer;
+                z-index: 2; 
+                transition: color 0.3s ease;
+                outline: none;
+                min-width: 110px; 
+            }
+
+            .lane-btn.active { color: #18181b; }
+
+            /* The sliding white pill */
+            .glider {
+                position: absolute;
+                top: 4px;
+                left: 4px;
+                width: calc(50% - 4px); /* Exact half width */
+                height: calc(100% - 8px);
+                background-color: white;
+                border-radius: 99px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+                transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+                z-index: 1;
+            }
+
+            .lane-switch.coach-active .glider {
+                transform: translateX(100%);
+            }
+
+            /* --- ACTION BUTTON --- */
+            .action-btn {
+                background: #18181b; 
+                color: white;
+                text-decoration: none;
+                padding: 8px 18px;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 0.85rem;
+                transition: transform 0.1s, background-color 0.2s;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .action-btn:hover {
+                background-color: var(--accent); 
+                transform: translateY(-1px);
+            }
+            
+            .emoji {
+                font-size: 1.1em;
+                line-height: 1;
+            }
+
+            /* --- PDF CONTAINER --- */
+            .pdf-container {
+                width: 100%;
+                height: calc(100vh - 64px); 
+                display: block;
+                background-color: #27272a;
+                background-image: radial-gradient(#3f3f46 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+
+            iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+                display: block;
+            }
+
+            /* --- MOBILE TWEAKS --- */
+            @media (max-width: 600px) {
+                .resume-toolbar { padding: 0 1rem; height: 110px; }
+                .toolbar-left { display: none; } 
+                .back-link { display: block; } 
+                .pdf-container { height: calc(100vh - 110px); }
+                
+                .resume-toolbar {
+                    display: grid;
+                    grid-template-areas: 
+                        "back download"
+                        "switcher switcher";
+                    grid-template-columns: 1fr 1fr;
+                    align-content: center;
+                }
+                .toolbar-left { display: flex; grid-area: back; }
+                .toolbar-right { display: flex; grid-area: download; }
+                .toolbar-center { display: flex; grid-area: switcher; margin-top: 5px; justify-content: center;}
+                
+                .lane-switch { width: 100%; justify-content: space-between; }
+                .lane-btn { flex: 1; min-width: auto; }
+            }
+        </style>
+	</body>
+</html>

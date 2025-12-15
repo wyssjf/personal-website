@@ -1,0 +1,221 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+
+// Updated to today's date
+const lastUpdated = new Date('December 14, 2025');
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Now | ${SITE_TITLE}`} description="What I'm focused on right now." />
+        <style>
+            .page-header {
+                margin-bottom: 2rem;
+            }
+
+            h1 {
+                font-family: 'Libre Baskerville', serif;
+                font-size: 2.5rem;
+                color: var(--text-main);
+                margin-bottom: 0.5rem;
+            }
+
+            .update-date {
+                font-size: 0.9rem;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                font-weight: bold;
+            }
+
+            .update-date span {
+                color: var(--accent);
+            }
+
+            .now-section {
+                margin-bottom: 3rem;
+            }
+
+            .now-heading {
+                font-size: 1.25rem;
+                font-weight: 700;
+                color: var(--text-main);
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            /* The distinct bullet point style */
+            .now-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .now-list li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin-bottom: 0.75rem;
+                line-height: 1.6;
+                color: var(--text-muted);
+            }
+
+            .now-list li::before {
+                content: "—"; /* Classic editorial dash */
+                position: absolute;
+                left: 0;
+                color: var(--accent);
+                font-weight: bold;
+            }
+
+            strong {
+                color: var(--text-main);
+            }
+            
+            /* --- STRAVA WIDGET STYLES --- */
+            .strava-container {
+                margin-top: 1.5rem;
+                padding-left: 1.5rem; /* Align with list text */
+            }
+
+            .strava-card {
+                display: inline-flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 0.75rem 1.25rem;
+                background: var(--background);
+                border: 1px solid rgba(var(--accent), 0.3); /* Sage Green Border */
+                border-radius: 8px;
+                text-decoration: none;
+                transition: all 0.2s ease;
+            }
+
+            .strava-card:hover {
+                background: rgba(var(--accent), 0.05);
+                border-color: var(--accent);
+                transform: translateY(-2px);
+            }
+
+            .strava-icon-box {
+                color: #FC4C02; /* Official Strava Orange (kept subtle) */
+                width: 24px;
+                height: 24px;
+            }
+
+            .strava-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .strava-label {
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--text-muted);
+            }
+
+            .strava-name {
+                font-size: 0.95rem;
+                font-weight: bold;
+                color: var(--text-main);
+            }
+
+            .strava-arrow {
+                color: var(--accent);
+                font-weight: bold;
+                padding-left: 0.5rem;
+            }
+
+            /* Credits at bottom */
+            .credit {
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                font-style: italic;
+                margin-top: 4rem;
+                border-top: 1px dashed rgba(var(--gray), 0.2);
+                padding-top: 1rem;
+            }
+            
+            .credit a {
+                color: var(--text-main);
+                text-decoration: none;
+                border-bottom: 1px solid rgba(var(--accent), 0.3);
+            }
+        </style>
+	</head>
+	<body>
+		<Header />
+		<main>
+            <section class="page-header">
+                <h1>Now</h1>
+                <p class="update-date">Updated <span>{lastUpdated.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}</span> in Richmond, VA.</p>
+            </section>
+            
+            <hr />
+
+            <section class="now-section">
+                <h2 class="now-heading">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><path d="M10 2h4"></path><path d="M12 14v-4"></path><path d="M4 13a8 8 0 0 1 8-7 6 6 0 0 0 3-1 15 15 0 0 0 3 7c0 .36-.04.7-.1 1"></path><path d="M14.12 15a6 6 0 0 1-5.47 5c-1.65.17-2.8-.85-2.25-2.5.5-1.5.75-2.25 2.25-4 .75-1 2.5-3.5 2.5-3.5"></path></svg>
+                    Coaching
+                </h2>
+                <ul class="now-list">
+                    <li>Wrapping up the indoor season and finalizing the transition to Outdoor.</li>
+                    <li>Planning the <strong>"Soft Launch"</strong> for new athletes on February 23.</li>
+                    <li>Scheduling time trials for March 5 to set baseline paces.</li>
+                    <li>Refining the fundraising strategy (Digital discount cards + Corporate matching).</li>
+                </ul>
+            </section>
+
+            <section class="now-section">
+                <h2 class="now-heading">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    Training
+                </h2>
+                <ul class="now-list">
+                    <li>Rebuilding base mileage after the winter break.</li>
+                    <li>Targeting a <strong>Half Marathon</strong> on March 22.</li>
+                    <li>Chasing a <strong>37:30 10K</strong> on April 18.</li>
+                    <li>Incorporating more strength work to support the speed phase.</li>
+                </ul>
+
+                <div class="strava-container">
+                    <a href="https://www.strava.com/athletes/96615559" target="_blank" class="strava-card">
+                        <div class="strava-icon-box">
+                            <svg role="img" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <title>Strava</title>
+                                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+                            </svg>
+                        </div>
+                        <div class="strava-content">
+                            <span class="strava-label">Follow Training</span>
+                            <span class="strava-name">Jay Wyss on Strava</span>
+                        </div>
+                        <div class="strava-arrow">→</div>
+                    </a>
+                </div>
+            </section>
+
+            <section class="now-section">
+                <h2 class="now-heading">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    Building
+                </h2>
+                <ul class="now-list">
+                    <li>Adding new features to <strong>TApp</strong> (Team Attendance App) for the spring roster.</li>
+                    <li>Cultivating this digital garden (switching to Astro).</li>
+                    <li>Researching investment strategies that align with ethical AI usage.</li>
+                </ul>
+            </section>
+
+            <div class="credit">
+                This is a <a href="https://nownownow.com/about" target="_blank">/now</a> page.
+            </div>
+		</main>
+		<Footer />
+	</body>
+</html>

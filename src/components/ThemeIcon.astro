@@ -1,0 +1,133 @@
+---
+---
+<label class="theme-switch" for="checkbox">
+    <input type="checkbox" id="checkbox" />
+    <div class="slider">
+        <span class="knob">
+            <svg class="icon sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            
+            <svg class="icon moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </span>
+    </div>
+</label>
+
+<style>
+    /* Container */
+    .theme-switch {
+        display: inline-block;
+        height: 26px;
+        position: relative;
+        width: 50px;
+    }
+
+    .theme-switch input {
+        display: none;
+    }
+
+    /* The Track */
+    .slider {
+        background-color: #e4e4e7; /* Light Grey Track */
+        bottom: 0;
+        cursor: pointer;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: .4s;
+        border-radius: 34px;
+        border: 1px solid #d4d4d8;
+    }
+
+    /* The Knob (The Circle that moves) */
+    .knob {
+        background-color: white;
+        bottom: 2px;
+        height: 20px;
+        left: 3px;
+        position: absolute;
+        transition: .4s;
+        width: 20px;
+        border-radius: 50%;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Icons inside the Knob */
+    .icon {
+        /* INCREASED SIZE from 12px to 14px */
+        width: 14px;
+        height: 14px;
+        position: absolute;
+    }
+
+    /* COLOR LOGIC */
+    /* Made sun slightly darker orange for better contrast against white knob */
+    .sun { color: #d97706; opacity: 1; transition: opacity 0.2s; } 
+    .moon { color: var(--accent); opacity: 0; transition: opacity 0.2s; } /* Purple Moon */
+
+    /* CHECKED STATE (Dark Mode) */
+    input:checked + .slider {
+        background-color: #27272a; /* Dark Track */
+        border-color: #3f3f46;
+    }
+
+    input:checked + .slider .knob {
+        transform: translateX(24px); /* Slide Right */
+    }
+
+    /* Switch Icons */
+    input:checked + .slider .sun { opacity: 0; }
+    input:checked + .slider .moon { opacity: 1; }
+</style>
+
+<script is:inline>
+    // 1. Theme Setup
+    const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+            return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+        return 'light';
+    })();
+
+    // 2. Set Initial State
+    if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+
+    // 3. Handle Toggle Logic
+    window.onload = function() {
+        const checkbox = document.getElementById('checkbox');
+        
+        // Sync the checkbox state with the current theme
+        checkbox.checked = document.documentElement.classList.contains('dark');
+
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+</script>

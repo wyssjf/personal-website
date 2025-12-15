@@ -1,0 +1,102 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+
+// Get all posts and sort by date (Newest first)
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			/* Clean, vertical list layout */
+			ul {
+				list-style-type: none;
+				padding: 0;
+				margin: 0;
+			}
+			
+			li {
+				display: flex;
+				justify-content: space-between;
+				align-items: baseline;
+				padding: 1rem 0;
+				border-bottom: 1px solid #f4f4f5; /* Subtle divider */
+				transition: border-color 0.2s;
+			}
+
+			/* In Dark Mode, make the divider darker */
+			:global(.dark) li {
+				border-bottom-color: #27272a;
+			}
+
+			li:hover {
+				/* Highlight the line when hovering */
+				border-bottom-color: var(--text-muted);
+			}
+
+			a {
+				font-size: 1.25rem; /* Nice and large */
+				color: var(--text-main);
+				text-decoration: none;
+				font-weight: 500;
+				/* Remove the underline by default, let the row border do the work */
+				border-bottom: none;
+			}
+
+			a:hover {
+				color: var(--accent); /* Turn purple/blue on hover */
+			}
+
+			.date {
+				color: var(--text-muted);
+				font-size: 0.9rem;
+				font-variant-numeric: tabular-nums; /* Aligns numbers nicely */
+				white-space: nowrap;
+				margin-left: 1rem;
+			}
+
+			/* Mobile: Stack them if the title is too long */
+			@media (max-width: 600px) {
+				li {
+					flex-direction: column;
+					align-items: flex-start;
+					gap: 0.25rem;
+				}
+				.date {
+					margin-left: 0;
+					font-size: 0.8rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				<ul>
+					{posts.map((post) => (
+						<li>
+							<a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+							<span class="date">
+								{post.data.pubDate.toLocaleDateString('en-us', {
+									year: 'numeric',
+									month: 'short',
+									day: 'numeric',
+								})}
+							</span>
+						</li>
+					))}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

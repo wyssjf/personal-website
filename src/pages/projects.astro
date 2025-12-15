@@ -1,0 +1,222 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+
+// --- YOUR PROJECTS DATA ---
+// Cleaned up: No more individual colors. The CSS handles the branding now.
+const projects = [
+  {
+    title: "TApp",
+    description: "A custom attendance tracking and team management application built for J.R. Tucker High School athletics.",
+    link: "https://netlify.jrtxctf.app",
+    tags: ["Web App", "Team Management"],
+    icon: "M3 18h18v-2H3v2zm0-5h18V5H3v8zm-2 7h22v-2H1v2z"
+  },
+  {
+    title: "J.R. Tucker XC & Track",
+    description: "The digital home of the Tigers. Features schedules, rosters, results, and team history.",
+    link: "http://www.tuckertrack.com",
+    tags: ["Coaching", "Team Site"],
+    icon: "M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 18c4.41 0 8-3.59 8-8s-3.59-8-8-8-8 3.59-8 8 3.59 8 8 8zm1-8h3.5c.28 0 .5.22.5.5s-.22.5-.5.5H13v3.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5V12c0-.28.22-.5.5-.5z"
+  },
+  {
+    title: "Virginia Track Coaches Association",
+    description: "The central hub for track & field coaches across the Commonwealth of Virginia.",
+    link: "http://www.vtca.online",
+    tags: ["Non-Profit", "Association"],
+    icon: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+  },
+  {
+    title: "J.R. Tucker Athletic Boosters",
+    description: "Supporting student-athletes through fundraising and community engagement.",
+    link: "http://www.jrtathleticboosters.com",
+    tags: ["Community", "Fundraising"],
+    icon: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+  },
+  {
+    title: "Pony Express Track & Field Club",
+    description: "Website for the youth track and field club dedicated to developing the next generation of runners.",
+    link: "http://www.ponyexpresstrackandfield.org",
+    tags: ["Club", "Youth Sports"],
+    icon: "M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"
+  }
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Projects | ${SITE_TITLE}`} description="A collection of web projects and coaching initiatives." />
+		<style>
+			/* Layout: Stacked List */
+			.project-list {
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
+				margin-top: 2rem;
+			}
+
+			.project-card {
+				display: grid;
+                grid-template-columns: auto 1fr auto; 
+				gap: 1.5rem;
+				align-items: center;
+				padding: 1.5rem;
+                background: var(--background);
+				border: 1px solid rgba(var(--gray), 0.15);
+				border-radius: 16px;
+				transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                text-decoration: none;
+                position: relative;
+                
+                /* Default left border is invisible/subtle */
+                border-left: 4px solid transparent;
+			}
+
+			.project-card:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+                
+                /* THE HOVER EFFECT: Uses your global accent (Sage/Mint) */
+				border-color: var(--accent);
+                /* Also highlights the left edge strongly */
+                border-left-color: var(--accent);
+			}
+
+			/* Icon Box */
+			.icon-box {
+                /* Uses color-mix to create a 15% opacity version of your Hex accent */
+				background: color-mix(in srgb, var(--accent), transparent 85%);
+				color: var(--accent);
+				width: 56px;
+				height: 56px;
+				border-radius: 12px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+                transition: background-color 0.2s;
+			}
+            
+            /* On hover, make the icon box slightly richer */
+            .project-card:hover .icon-box {
+                background: color-mix(in srgb, var(--accent), transparent 75%);
+            }
+
+            .icon-box svg {
+                width: 28px;
+                height: 28px;
+                fill: currentColor;
+            }
+
+			.content {
+                display: flex;
+                flex-direction: column;
+                gap: 0.25rem;
+			}
+
+			.project-title {
+				margin: 0;
+				font-size: 1.25rem;
+                font-weight: 700;
+                color: var(--text-main);
+                line-height: 1.2;
+                transition: color 0.2s;
+			}
+            
+            .project-card:hover .project-title {
+                color: var(--accent);
+            }
+
+			.project-desc {
+				color: var(--text-muted);
+                font-size: 0.95rem;
+				margin: 0;
+				line-height: 1.5;
+                max-width: 90%;
+			}
+
+			.tags {
+				display: flex;
+				gap: 0.5rem;
+				margin-bottom: 0.5rem;
+                flex-wrap: wrap;
+			}
+
+			.tag {
+				font-size: 0.7rem;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+                /* Always use the accent color */
+				color: var(--accent);
+				font-weight: bold;
+                opacity: 0.9;
+			}
+
+            .action-arrow {
+                color: var(--text-muted);
+                opacity: 0.3;
+                transition: all 0.2s ease;
+            }
+
+            .project-card:hover .action-arrow {
+                color: var(--accent);
+                opacity: 1;
+                transform: translateX(4px);
+            }
+
+			@media (max-width: 600px) {
+				.project-card {
+                    grid-template-columns: 1fr;
+                    gap: 1rem;
+				}
+                .action-arrow {
+                    display: none;
+                }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				<h1>Projects</h1>
+				<p>Splitting time between the track and the terminal. A selection of tools and organizations I've built for the running community.</p>
+				<hr />
+				
+				<div class="project-list">
+					{projects.map((project) => (
+						<a href={project.link} target="_blank" class="project-card">
+							
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24">
+                                    <path d={project.icon} />
+                                </svg>
+                            </div>
+
+							<div class="content">
+                                <div class="tags">
+									{project.tags.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</div>
+								<h3 class="project-title">{project.title}</h3>
+								<p class="project-desc">{project.description}</p>
+							</div>
+
+                            <div class="action-arrow">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+
+						</a>
+					))}
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
