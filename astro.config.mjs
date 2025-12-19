@@ -1,13 +1,14 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import sitemap from '@astrojs/sitemap'; // Add this line
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://your-site-name.netlify.app',
-  base: '/',
-  output: 'static',
+  // Final Netlify URL
+  site: 'https://jaywyss.netlify.app', 
+  base: '/', 
+  output: 'static', 
   integrations: [
-    tailwind(), 
-    sitemap() // Add this line
+    tailwind(),
+    sitemap(),
   ],
 });
