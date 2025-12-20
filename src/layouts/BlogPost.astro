@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
@@ -9,48 +10,88 @@ import Header from '../components/Header.astro';
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const currentPath = Astro.url.pathname;
+const currentIndex = posts.findIndex((post) => currentPath.includes(post.slug));
+
+const nextPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
+const prevPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
+
+// Reading Time Logic
+const allPosts = await getCollection('blog');
+const currentPost = allPosts.find((p) => currentPath.includes(p.slug));
+const wordsPerMinute = 200;
+const wordCount = currentPost?.body.split(/\s+/g).length || 0;
+const readTime = Math.ceil(wordCount / wordsPerMinute);
 ---
 
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
+			main { width: calc(100% - 2em); max-width: 100%; margin: 0; }
+			.prose { width: 720px; max-width: calc(100% - 2em); margin: auto; padding: 1em; color: rgb(var(--gray-dark)); }
+			.title { margin-bottom: 1em; padding: 1em 0; text-align: center; line-height: 1; }
+			.date { margin-bottom: 0.5em; color: rgb(var(--gray)); font-size: 0.9rem; }
+			.read-time { display: block; font-size: 0.8rem; color: var(--accent); margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+			/* The Unified Navigation Row */
+			.nav-actions-row { 
+				display: flex; 
+				justify-content: center; 
+				align-items: center;
+				gap: 0.75rem; 
+				margin-top: 4rem; 
+				padding-top: 2rem; 
+				border-top: 1px solid rgba(var(--gray-light), 0.1); 
+				flex-wrap: wrap; /* Wraps cleanly on mobile */
 			}
-			.hero-image {
-				width: 100%;
+
+			.pill-nav { 
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				background: var(--accent); 
+				color: white; 
+				border: none;
+				padding: 0.5rem 1.25rem; 
+				border-radius: 9999px; /* Pill Shape */
+				font-size: 0.85rem; 
+				font-weight: 700; 
+				cursor: pointer; 
+				transition: all 0.2s ease;
+				text-decoration: none;
+				white-space: nowrap;
 			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
+
+			/* Ghost style for outer nav buttons to keep focus on center */
+			.pill-nav.secondary {
+				background: rgba(var(--gray-light), 0.1);
+				color: var(--text-main);
+				border: 1px solid rgba(var(--gray-light), 0.1);
+				font-weight: 500;
 			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
+
+			.pill-nav:hover { 
+				transform: translateY(-2px); 
+				filter: brightness(1.1); 
 			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
+
+			.pill-nav.secondary:hover {
+				background: rgba(var(--accent), 0.1);
+				border-color: var(--accent);
+				color: var(--accent);
 			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
+
+			/* Disabled state if no post exists */
+			.pill-nav.disabled {
+				opacity: 0.3;
+				cursor: not-allowed;
+				pointer-events: none;
 			}
 		</style>
 	</head>
@@ -59,28 +100,71 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<Header />
 		<main>
 			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
 				<div class="prose">
 					<div class="title">
 						<div class="date">
 							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
+							<span class="read-time">{readTime} min read</span>
 						</div>
 						<h1>{title}</h1>
 						<hr />
 					</div>
+					
 					<slot />
+
+					<nav class="nav-actions-row">
+						{prevPost ? (
+							<a href={`/blog/${prevPost.slug}/`} class="pill-nav secondary" title={prevPost.data.title}>
+								← Previous
+							</a>
+						) : (
+							<span class="pill-nav secondary disabled">← Previous</span>
+						)}
+
+						<button id="shareBtn" class="pill-nav">
+							Share
+						</button>
+
+						<a href="/blog" class="pill-nav">
+							Archive
+						</a>
+
+						{nextPost ? (
+							<a href={`/blog/${nextPost.slug}/`} class="pill-nav secondary" title={nextPost.data.title}>
+								Next →
+							</a>
+						) : (
+							<span class="pill-nav secondary disabled">Next →</span>
+						)}
+					</nav>
 				</div>
 			</article>
 		</main>
 		<Footer />
+
+		<script is:inline>
+			const shareBtn = document.getElementById('shareBtn');
+			shareBtn.addEventListener('click', async () => {
+				const shareData = {
+					title: document.title,
+					url: window.location.href,
+				};
+
+				try {
+					if (navigator.share) {
+						await navigator.share(shareData);
+					} else {
+						await navigator.clipboard.writeText(window.location.href);
+						const originalText = shareBtn.innerText;
+						shareBtn.innerText = 'Copied!';
+						setTimeout(() => {
+							shareBtn.innerText = originalText;
+						}, 2000);
+					}
+				} catch (err) {
+					console.error('Error sharing:', err);
+				}
+			});
+		</script>
 	</body>
 </html>
