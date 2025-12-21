@@ -15,7 +15,6 @@
     --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     --max-width: 720px;
 
-    /* UPDATED: Now pointing to the Vector SVG file */
     --city-bg: url('/city-light.svg');
 }
 
@@ -133,13 +132,10 @@ html.dark {
     --text-main: #e2e8f0; 
     --text-muted: #94a3b8;
     --accent: #c084fc; 
-    
-    /* UPDATED: Switch to Dark Mode Vector SVG */
     --city-bg: url('/city-dark.svg');
 }
 
 html.dark body {
-    /* Kept the glow, removed the fixed image */
     background-image: radial-gradient(circle at 50% 0%, rgba(192, 132, 252, 0.15), transparent 60%);
     background-attachment: fixed;
 }
@@ -150,4 +146,19 @@ html.dark img:hover { opacity: 1; }
 html.dark pre, html.dark code {
     background-color: #1e1b2e;
     color: var(--text-main);
+}
+
+/* --- STABILITY FIXES --- */
+/* Forces the header to be visible and anchors it to the top */
+header {
+    z-index: 999;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: var(--background);
+}
+
+/* Scrollbar stability: prevents the page from "shifting" when navigating */
+html {
+    overflow-y: scroll;
 }
