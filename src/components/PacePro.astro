@@ -1,6 +1,6 @@
 ---
 // Pace Pro | Precision Training Engine
-// Standalone Build for Jay Wyss, MPA
+// Final Isolation Build for Jay Wyss, MPA
 ---
 
 <!DOCTYPE html>
@@ -14,93 +14,130 @@
     <meta name="theme-color" content="#020617" />
     <link rel="apple-touch-icon" href="/icon-192x192.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <style>
+    <style is:global>
+        /* CSS Reset to prevent portfolio styles from leaking in */
+        #pace-pro-root, #pace-pro-root * {
+            box-sizing: border-box !important;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
         :root {
-            --bg: #020617;
-            --card: #0f172a;
-            --border: #1e293b;
-            --sky: #38bdf8;
-            --slate-400: #94a3b8;
-            --slate-600: #334155;
-            --red: #ef4444;
-            --orange: #f97316;
-            --yellow: #facc15;
-            --blue: #3b82f6;
-            --green: #22c55e;
+            --bg-pro: #020617;
+            --card-pro: #0f172a;
+            --border-pro: #1e293b;
+            --sky-pro: #38bdf8;
+            --slate-pro: #94a3b8;
+            --red-pro: #ef4444;
+            --orange-pro: #f97316;
+            --yellow-pro: #facc15;
+            --blue-pro: #3b82f6;
+            --green-pro: #22c55e;
         }
 
         body {
-            background-color: var(--bg);
-            color: white;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 16px;
-            display: flex;
-            justify-content: center;
+            background-color: var(--bg-pro) !important;
+            color: white !important;
+            font-family: -apple-system, system-ui, sans-serif !important;
+            display: flex !important;
+            justify-content: center !important;
+            min-height: 100vh !important;
         }
 
-        .container { width: 100%; max-width: 400px; padding-bottom: 80px; }
+        #pace-pro-root {
+            width: 100% !important;
+            max-width: 420px !important;
+            padding: 20px !important;
+        }
 
-        /* Header Styles */
-        header { text-align: center; margin-bottom: 24px; }
-        h1 { font-size: 40px; font-weight: 900; font-style: italic; margin: 0; text-transform: uppercase; letter-spacing: -2px; }
-        .sky-text { color: var(--sky); }
-        .unit-btn { background: #1e293b; color: var(--sky); border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; margin-top: 12px; cursor: pointer; }
+        .header-pro { text-align: center !important; margin-bottom: 24px !important; }
+        .title-pro { font-size: 42px !important; font-weight: 900 !important; font-style: italic !important; color: white !important; letter-spacing: -2px !important; text-transform: uppercase !important; }
+        .sky-pro { color: var(--sky-pro) !important; }
 
-        /* Input Panel */
-        .input-panel { background: var(--card); border: 2px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 32px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); }
+        .unit-btn { 
+            background: #1e293b !important; 
+            color: var(--sky-pro) !important; 
+            border: 1px solid var(--border-pro) !important; 
+            padding: 8px 20px !important; 
+            border-radius: 30px !important; 
+            font-size: 11px !important; 
+            font-weight: 800 !important; 
+            text-transform: uppercase !important; 
+            margin-top: 15px !important; 
+            cursor: pointer !important;
+        }
+
+        .panel-pro { 
+            background: var(--card-pro) !important; 
+            border: 2px solid var(--border-pro) !important; 
+            border-radius: 16px !important; 
+            padding: 24px !important; 
+            margin-bottom: 30px !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
+        }
         
-        select { width: 100%; background: #1e293b; color: white; border: 1px solid var(--border); border-radius: 6px; padding: 10px; font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; -webkit-appearance: none; }
+        .select-pro { 
+            width: 100% !important; 
+            background: #1e293b !important; 
+            color: white !important; 
+            border: 1px solid var(--border-pro) !important; 
+            border-radius: 8px !important; 
+            padding: 12px !important; 
+            font-size: 14px !important; 
+            font-weight: 700 !important; 
+            margin-bottom: 20px !important; 
+        }
 
-        .time-row { display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-bottom: 20px; }
-        .time-input { background: transparent; border: none; border-bottom: 3px solid var(--border); color: white; font-size: 60px; font-weight: 900; width: 85px; text-align: center; outline: none; }
-        .time-input:focus { border-color: var(--sky); }
-        .colon { font-size: 36px; font-weight: 900; color: var(--slate-600); }
+        .time-row { display: flex !important; justify-content: center !important; align-items: baseline !important; gap: 8px !important; margin-bottom: 20px !important; }
+        .input-pro { background: transparent !important; border: none !important; border-bottom: 3px solid var(--border-pro) !important; color: white !important; font-size: 58px !important; font-weight: 900 !important; width: 85px !important; text-align: center !important; outline: none !important; }
+        .input-pro:focus { border-color: var(--sky-pro) !important; }
+        .colon-pro { font-size: 36px !important; font-weight: 900 !important; color: #334155 !important; }
 
-        /* Fudge Slider */
-        .fudge-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: var(--slate-400); text-transform: uppercase; margin-bottom: 6px; }
-        input[type=range] { width: 100%; height: 6px; border-radius: 5px; background: var(--border); accent-color: var(--sky); cursor: pointer; }
+        .fudge-label { display: flex !important; justify-content: space-between !important; font-size: 11px !important; font-weight: 800 !important; color: var(--slate-pro) !important; text-transform: uppercase !important; margin-bottom: 8px !important; }
+        .slider-pro { width: 100% !important; height: 8px !important; border-radius: 5px !important; background: var(--border-pro) !important; accent-color: var(--sky-pro) !important; cursor: pointer !important; }
 
-        /* Cards */
-        .group-header { font-size: 12px; font-weight: 800; color: var(--slate-400); text-transform: uppercase; margin: 24px 0 12px 0; border-left: 4px solid var(--slate-600); padding-left: 10px; }
+        .group-tag { font-size: 12px !important; font-weight: 800 !important; color: var(--slate-pro) !important; text-transform: uppercase !important; margin: 30px 0 12px 0 !important; border-left: 4px solid #334155 !important; padding-left: 10px !important; }
         
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid transparent; }
-        .card-active { border-color: var(--sky); background: rgba(56, 189, 248, 0.1); }
+        .card-pro { 
+            background: var(--card-pro) !important; 
+            border: 1px solid var(--border-pro) !important; 
+            border-radius: 10px !important; 
+            padding: 16px !important; 
+            margin-bottom: 10px !important; 
+            display: flex !important; 
+            justify-content: space-between !important; 
+            align-items: center !important;
+            border-left: 5px solid transparent !important;
+        }
+        .active-pro { border-color: var(--sky-pro) !important; background: rgba(56, 189, 248, 0.1) !important; }
         
-        .label-stack { display: flex; flex-direction: column; }
-        .card-label { font-size: 14px; font-weight: 700; }
-        .card-sub { font-size: 10px; color: var(--slate-400); text-transform: uppercase; margin-top: 2px; font-weight: 600; }
-        .card-val { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 24px; font-weight: 700; color: var(--sky); }
+        .label-wrap { display: flex !important; flex-direction: column !important; }
+        .text-main { font-size: 15px !important; font-weight: 700 !important; color: white !important; }
+        .text-sub { font-size: 10px !important; color: var(--slate-pro) !important; text-transform: uppercase !important; font-weight: 800 !important; margin-top: 2px !important; }
+        .val-pro { font-family: monospace !important; font-size: 24px !important; font-weight: 700 !important; color: var(--sky-pro) !important; }
 
-        /* Intensity Classes */
-        .red-pace { border-left-color: var(--red); }
-        .red-text { color: var(--red); }
-        .orange-pace { border-left-color: var(--orange); }
-        .orange-text { color: var(--orange); }
-        .yellow-pace { border-left-color: var(--yellow); }
-        .yellow-text { color: var(--yellow); }
-        .blue-pace { border-left-color: var(--blue); }
-        .blue-text { color: var(--blue); }
-        .green-pace { border-left-color: var(--green); }
-        .green-text { color: var(--green); }
+        .red-pro { border-left-color: var(--red-pro) !important; }
+        .orange-pro { border-left-color: var(--orange-pro) !important; }
+        .yellow-pro { border-left-color: var(--yellow-pro) !important; }
+        .blue-pro { border-left-color: var(--blue-pro) !important; }
+        .green-pro { border-left-color: var(--green-pro) !important; }
 
-        .hidden { display: none; }
-        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; }
-        .footer-link { font-size: 11px; color: var(--slate-400); text-decoration: none; font-weight: 700; text-transform: uppercase; }
-        .gemmy-credit { font-size: 9px; color: var(--slate-600); margin-top: 4px; font-style: italic; text-transform: uppercase; }
+        .hidden { display: none !important; }
+        footer { margin-top: 50px !important; padding-top: 20px !important; border-top: 1px solid var(--border-pro) !important; text-align: center !important; }
+        .foot-link { font-size: 11px !important; color: var(--slate-pro) !important; text-decoration: none !important; font-weight: 700 !important; text-transform: uppercase !important; }
     </style>
 </head>
 <body>
-    <main class="container">
-        <header>
-            <h1>PACE <span class="sky-text">PRO</span></h1>
+    <div id="pace-pro-root">
+        <header class="header-pro">
+            <h1 class="title-pro">PACE <span class="sky-pro">PRO</span></h1>
             <button id="unit-toggle" class="unit-btn">Units: Imperial (Miles)</button>
         </header>
 
-        <div class="input-panel">
-            <select id="dist-select">
+        <div class="panel-pro">
+            <select id="dist-select" class="select-pro">
                 <option value="800">800m</option>
                 <option value="1600">1,600m</option>
                 <option value="3200">3,200m</option>
@@ -112,34 +149,31 @@
 
             <div class="time-row">
                 <div id="hr-wrap" class="hidden">
-                    <input type="number" id="hr" value="0" class="time-input" />
-                    <span class="colon">:</span>
+                    <input type="number" id="hr" value="0" class="input-pro" />
+                    <span class="colon-pro">:</span>
                 </div>
-                <input type="number" id="min" value="18" class="time-input" />
-                <span class="colon">:</span>
-                <input type="number" id="sec" value="20" class="time-input" />
+                <input type="number" id="min" value="18" class="input-pro" />
+                <span class="colon-pro">:</span>
+                <input type="number" id="sec" value="20" class="input-pro" />
             </div>
 
-            <div class="fudge-area">
-                <div class="fudge-header">
-                    <span>Fudge Factor</span>
-                    <span id="fudge-val" class="sky-text">0%</span>
-                </div>
-                <input type="range" id="fudge-slider" min="-5" max="5" value="0" step="1" />
+            <div class="fudge-label">
+                <span>Fudge Factor</span>
+                <span id="fudge-val" class="sky-pro">0%</span>
             </div>
+            <input type="range" id="fudge-slider" class="slider-pro" min="-5" max="5" value="0" step="1" />
         </div>
 
-        <h2 class="group-header">Equivalent Race Results</h2>
+        <h2 class="group-tag">Equivalent Race Results</h2>
         <div id="equiv-list"></div>
 
-        <h2 class="group-header">Training Intensities</h2>
+        <h2 class="group-tag">Training Intensities</h2>
         <div id="training-engine"></div>
 
         <footer>
-            <a href="https://jaywyss.me" target="_blank" class="footer-link">Copyright © 2025 Jay Wyss, MPA</a>
-            <div class="gemmy-credit">Thought Partner: Gemini</div>
+            <a href="https://jaywyss.me" target="_blank" class="foot-link">Copyright © 2025 Jay Wyss, MPA</a>
         </footer>
-    </main>
+    </div>
 
     <script is:inline>
         const distSelect = document.getElementById('dist-select');
@@ -192,32 +226,31 @@
             fudgeVal.innerText = (fudgeSlider.value > 0 ? "+" : "") + fudgeSlider.value + "%";
 
             const inputSecs = (parseInt(hrInput.value || 0) * 3600) + (parseInt(minInput.value || 0) * 60) + parseInt(secInput.value || 0);
-            const selectedDist = parseInt(distSelect.value);
-            const foundRace = RACE_MAP.find(r => r.factor.toString().includes(selectedDist) || (selectedDist === 5000 && r.factor === 1.0) || (selectedDist === 21098 && r.name === "Half Marathon") || (selectedDist === 42195 && r.name === "Marathon"));
+            const foundRace = RACE_MAP.find(r => r.factor.toString().includes(distSelect.value) || (distSelect.value == "5000" && r.factor === 1.0));
             const anchorSecs = inputSecs / (foundRace ? foundRace.factor : 1);
 
             document.getElementById('equiv-list').innerHTML = RACE_MAP.map(r => `
-                <div class="card ${Math.abs(anchorSecs * r.factor - inputSecs) < 1 ? 'card-active' : ''}">
-                    <span class="card-label" style="color: var(--slate-400)">${r.name}</span>
-                    <span class="card-val">${formatTime((anchorSecs * r.factor) * fudge)}</span>
+                <div class="card-pro ${Math.abs(anchorSecs * r.factor - inputSecs) < 1 ? 'active-pro' : ''}">
+                    <span class="text-sub">${r.name}</span>
+                    <span class="val-pro">${formatTime((anchorSecs * r.factor) * fudge)}</span>
                 </div>`).join('');
 
             const unitBase = anchorSecs / (isMetric ? 5.00 : 3.11);
             document.getElementById('training-engine').innerHTML = TRAINING_MAP.map(item => {
                 const val = (unitBase * item.factor) * fudge;
-                let c = 'sky-text', b = '';
-                if (item.type === 'intense') { c = 'red-text'; b = 'red-pace'; }
-                if (item.type === 'threshold') { c = 'orange-text'; b = 'orange-pace'; }
-                if (item.type === 'tempo') { c = 'yellow-text'; b = 'yellow-pace'; }
-                if (item.type === 'aerobic') { c = 'blue-text'; b = 'blue-pace'; }
-                if (item.type === 'easy') { c = 'green-text'; b = 'green-pace'; }
+                let c = '#38bdf8', b = '';
+                if (item.type === 'intense') { c = '#ef4444'; b = 'red-pro'; }
+                if (item.type === 'threshold') { c = '#f97316'; b = 'orange-pro'; }
+                if (item.type === 'tempo') { c = '#facc15'; b = 'yellow-pro'; }
+                if (item.type === 'aerobic') { c = '#3b82f6'; b = 'blue-pro'; }
+                if (item.type === 'easy') { c = '#22c55e'; b = 'green-pro'; }
                 return `
-                    <div class="card ${b}">
-                        <div class="label-stack">
-                            <span class="card-label">${item.name}</span>
-                            <span class="card-sub">${item.type === 'intense' ? item.sub : 'Pace /' + (isMetric ? 'km' : 'mi')}</span>
+                    <div class="card-pro ${b}">
+                        <div class="label-wrap">
+                            <span class="text-main">${item.name}</span>
+                            <span class="text-sub">${item.type === 'intense' ? item.sub : 'Pace /' + (isMetric ? 'km' : 'mi')}</span>
                         </div>
-                        <span class="card-val ${c}">${formatTime(val)}</span>
+                        <span class="val-pro" style="color: ${c} !important;">${formatTime(val)}</span>
                     </div>`;
             }).join('');
         }
@@ -225,16 +258,13 @@
         unitToggle.addEventListener('click', () => { 
             isMetric = !isMetric; 
             unitToggle.innerText = `Units: ${isMetric ? 'Metric (KM)' : 'Imperial (Miles)'}`;
-            unitToggle.classList.toggle('metric');
             update(); 
         });
         [distSelect, hrInput, minInput, secInput, fudgeSlider].forEach(el => el.addEventListener('input', update));
         update();
 
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js');
-            });
+            window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); });
         }
     </script>
 </body>
