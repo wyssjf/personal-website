@@ -1,0 +1,176 @@
+---
+// Pace Pro | Standalone Astro Page for jaywyss.me
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pace Pro | Precision Training Engine</title>
+    
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0ea5e9" />
+    <link rel="apple-touch-icon" href="/icon-192x192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#020617] text-white font-sans">
+    <main class="min-h-screen p-4 pb-20">
+        <header class="text-center mb-6 pt-4">
+            <h1 class="text-4xl font-black italic tracking-tighter uppercase">PACE <span class="text-sky-500">PRO</span></h1>
+            <div class="flex justify-center mt-3 gap-4">
+                <button id="unit-toggle" class="bg-slate-800 text-[9px] font-black px-4 py-1.5 rounded-full border border-slate-700 text-sky-400 uppercase tracking-widest hover:bg-slate-700 transition-all">
+                    Units: Imperial (Miles)
+                </button>
+            </div>
+        </header>
+
+        <div class="max-w-md mx-auto">
+            <div class="bg-slate-900 border-2 border-slate-800 rounded-xl p-6 mb-8 shadow-2xl">
+                <div class="mb-6">
+                    <select id="dist-select" class="bg-slate-800 text-xs font-black uppercase tracking-widest px-4 py-2 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-500 pr-10 w-full appearance-none">
+                        <option value="800">800m</option>
+                        <option value="1600">1,600m</option>
+                        <option value="3200">3,200m</option>
+                        <option value="5000" selected>5,000m (5K)</option>
+                        <option value="10000">10,000m (10K)</option>
+                        <option value="21098">Half Marathon</option>
+                        <option value="42195">Marathon</option>
+                    </select>
+                </div>
+
+                <div class="flex justify-center items-center gap-2 mb-6">
+                    <div id="hr-wrap" class="hidden flex items-center gap-2">
+                        <input type="number" id="hr" value="0" class="bg-transparent text-6xl font-black w-20 text-center focus:outline-none border-b-2 border-slate-800 focus:border-sky-500">
+                        <span class="text-4xl font-black text-slate-700">:</span>
+                    </div>
+                    <input type="number" id="min" value="18" class="bg-transparent text-6xl font-black w-24 text-center focus:outline-none border-b-2 border-slate-800 focus:border-sky-500">
+                    <span class="text-4xl font-black text-slate-700">:</span>
+                    <input type="number" id="sec" value="20" class="bg-transparent text-6xl font-black w-24 text-center focus:outline-none border-b-2 border-slate-800 focus:border-sky-500">
+                </div>
+
+                <div class="border-t border-slate-800 pt-4">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Fudge Factor</span>
+                        <span id="fudge-val" class="text-xs font-mono text-sky-400 font-bold">0%</span>
+                    </div>
+                    <input type="range" id="fudge-slider" min="-5" max="5" value="0" step="1" class="w-full accent-sky-500 cursor-pointer">
+                </div>
+            </div>
+
+            <h2 class="group-header">Equivalent Race Results</h2>
+            <div id="equiv-list" class="space-y-1.5 mb-10"></div>
+
+            <h2 class="group-header">Training Intensities</h2>
+            <div id="training-engine"></div>
+
+            <footer class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500">
+                <p class="text-[10px] uppercase tracking-widest font-bold">
+                    Copyright © 2025 <a href="https://jaywyss.me" target="_blank" class="hover:text-sky-400 transition-colors">Jay Wyss, MPA</a>
+                </p>
+                <p class="text-[9px] mt-1 uppercase italic">Thought Partner: Gemini</p>
+            </footer>
+        </div>
+    </main>
+
+    <style>
+        .group-header { font-size: 0.75rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.15em; margin: 1.5rem 0 0.6rem 0.2rem; border-left: 3px solid #334155; padding-left: 8px; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none; }
+    </style>
+
+    <script is:inline>
+        const distSelect = document.getElementById('dist-select');
+        const hrInput = document.getElementById('hr');
+        const minInput = document.getElementById('min');
+        const secInput = document.getElementById('sec');
+        const hrWrap = document.getElementById('hr-wrap');
+        const unitToggle = document.getElementById('unit-toggle');
+        const fudgeSlider = document.getElementById('fudge-slider');
+        const fudgeVal = document.getElementById('fudge-val');
+
+        let isMetric = false;
+
+        const RACE_MAP = [
+            { name: "800m", factor: 0.12818 }, { name: "1,600m", factor: 0.2800 },
+            { name: "3,200m", factor: 0.60818 }, { name: "5,000m", factor: 1.0 },
+            { name: "10,000m", factor: 2.1 }, { name: "Half Marathon", factor: 4.6418 },
+            { name: "Marathon", factor: 9.7045 }
+        ];
+
+        const TRAINING_MAP = [
+            { name: "800m Reps", sub: "Per 400m", factor: 0.80 / 4, type: 'intense' },
+            { name: "1,600m Reps", sub: "Per 400m", factor: 0.875 / 4, type: 'intense' },
+            { name: "3,200m Reps", sub: "Per 400m", factor: 0.95 / 4, type: 'intense' },
+            { name: "5,000m Reps", sub: "Per 400m", factor: 1.0 / 4, type: 'intense' },
+            { name: "Critical Velocity", sub: "CV Pace", factor: 1.025, type: 'threshold' },
+            { name: "10,000m", sub: "10k Effort", factor: 1.05, type: 'threshold' },
+            { name: "Threshold", sub: "T-Pace", factor: 1.075, type: 'threshold' },
+            { name: "Half Marathon", sub: "HM Pace", factor: 1.10, type: 'tempo' },
+            { name: "Marathon", sub: "M-Pace", factor: 1.15, type: 'tempo' },
+            { name: "General Aerobic Power (High)", sub: "High End", factor: 1.20, type: 'aerobic' },
+            { name: "General Aerobic Power (Low)", sub: "Low End", factor: 1.40, type: 'aerobic' },
+            { name: "Pretty Easy", sub: "Aerobic Base", factor: 1.50, type: 'easy' },
+            { name: "Easy", sub: "Aerobic Base", factor: 1.60, type: 'easy' },
+            { name: "Very Easy", sub: "Recovery", factor: 1.70, type: 'easy' },
+            { name: "Regeneration", sub: "Active Recovery", factor: 1.80, type: 'easy' }
+        ];
+
+        function formatTime(s) {
+            s = Math.round(s);
+            const h = Math.floor(s / 3600);
+            const m = Math.floor((s % 3600) / 60);
+            const sec = s % 60;
+            return h > 0 ? `${h}:${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}` : `${m}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        function update() {
+            distSelect.value > 10000 ? hrWrap.classList.remove('hidden') : hrWrap.classList.add('hidden');
+            const fudge = 1 + (parseFloat(fudgeSlider.value) / 100);
+            fudgeVal.innerText = (fudgeSlider.value > 0 ? "+" : "") + fudgeSlider.value + "%";
+            const inputSecs = (parseInt(hrInput.value || 0) * 3600) + (parseInt(minInput.value || 0) * 60) + parseInt(secInput.value || 0);
+            const selectedDist = parseInt(distSelect.value);
+            const foundRace = RACE_MAP.find(r => {
+                if(selectedDist === 800) return r.name === "800m";
+                if(selectedDist === 1600) return r.name === "1,600m";
+                if(selectedDist === 3200) return r.name === "3,200m";
+                if(selectedDist === 5000) return r.name === "5,000m";
+                if(selectedDist === 10000) return r.name === "10,000m";
+                if(selectedDist === 21098) return r.name === "Half Marathon";
+                if(selectedDist === 42195) return r.name === "Marathon";
+            });
+            const anchorSecs = inputSecs / (foundRace ? foundRace.factor : 1);
+
+            document.getElementById('equiv-list').innerHTML = RACE_MAP.map(r => `
+                <div class="flex justify-between items-center bg-[#0f172a] rounded-lg p-3 border border-[#1e293b] mb-1.5 ${Math.abs(anchorSecs * r.factor - inputSecs) < 1 ? 'border-sky-500/50 bg-sky-950/20' : ''}">
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider">${r.name}</span>
+                    <span class="text-xl font-mono text-sky-400">${formatTime((anchorSecs * r.factor) * fudge)}</span>
+                </div>`).join('');
+
+            const unitDivisor = isMetric ? 5.00 : 3.11;
+            const unitBase = anchorSecs / unitDivisor;
+
+            document.getElementById('training-engine').innerHTML = TRAINING_MAP.map(item => {
+                const val = (unitBase * item.factor) * fudge;
+                let c = 'text-white', b = 'border-l-slate-600';
+                if (item.type === 'intense') { c = 'text-red-500'; b = 'border-l-red-500'; }
+                if (item.type === 'threshold') { c = 'text-orange-500'; b = 'border-l-orange-500'; }
+                if (item.type === 'tempo') { c = 'text-yellow-400'; b = 'border-l-yellow-400'; }
+                if (item.type === 'aerobic') { c = 'text-blue-500'; b = 'border-l-blue-500'; }
+                if (item.type === 'easy') { c = 'text-green-500'; b = 'border-l-green-500'; }
+                return `
+                    <div class="flex justify-between items-center bg-[#0f172a] rounded-lg p-3 border border-[#1e293b] mb-1.5 border-l-4 ${b}">
+                        <div><div class="text-[13px] font-bold text-slate-100">${item.name}</div><div class="text-[9px] text-slate-500 uppercase font-black">${item.type === 'intense' ? item.sub : 'Pace /' + (isMetric ? 'km' : 'mi')}</div></div>
+                        <div class="text-2xl font-mono ${c}">${formatTime(val)}</div>
+                    </div>`;
+            }).join('');
+        }
+
+        unitToggle.addEventListener('click', () => { isMetric = !isMetric; unitToggle.innerText = `Units: ${isMetric ? 'Metric (KM)' : 'Imperial (Miles)'}`; unitToggle.classList.toggle('text-sky-400'); unitToggle.classList.toggle('text-lime-400'); update(); });
+        [distSelect, hrInput, minInput, secInput, fudgeSlider].forEach(el => el.addEventListener('input', update));
+        update();
+    </script>
+</body>
+</html>
