@@ -1,0 +1,234 @@
+---
+// Pace Pro | Precision Training Engine
+// Calibrated for Jay Wyss, MPA
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Pace Pro | Precision Training Engine</title>
+    
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#020617" />
+    <link rel="apple-touch-icon" href="/icon-192x192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --border: #1e293b;
+            --sky: #0ea5e9;
+            --slate-400: #94a3b8;
+            --slate-500: #64748b;
+            --red: #ef4444;
+            --orange: #f97316;
+            --yellow: #facc15;
+            --blue: #3b82f6;
+            --green: #22c55e;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: white;
+            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 1rem;
+            line-height: 1.5;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container { max-width: 448px; margin: 0 auto; padding-bottom: 5rem; }
+
+        /* Header */
+        h1 { text-align: center; font-size: 2.5rem; font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: -0.05em; margin: 1.5rem 0 0.5rem; }
+        .sky-text { color: var(--sky); }
+        .btn-toggle { display: block; margin: 0 auto 2rem; background: #1e293b; color: var(--sky); border: 1px solid var(--border); padding: 0.5rem 1.25rem; border-radius: 9999px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; }
+        .btn-toggle.metric { color: #a3e635; border-color: #a3e63544; }
+
+        /* Input Section */
+        .input-panel { background: var(--card); border: 2px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
+        
+        select { width: 100%; background: #1e293b; color: white; border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem; font-size: 14px; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; outline: none; }
+
+        .time-row { display: flex; justify-content: center; align-items: center; gap: 0.25rem; margin-bottom: 1.5rem; }
+        .time-input { background: transparent; border: none; border-bottom: 3px solid var(--border); color: white; font-size: 4rem; font-weight: 900; width: 5.5rem; text-align: center; outline: none; }
+        .time-input:focus { border-color: var(--sky); }
+        .colon { font-size: 2.5rem; font-weight: 900; color: var(--slate-600); padding-bottom: 10px; }
+
+        /* Fudge Slider */
+        .fudge-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .fudge-label { font-size: 11px; font-weight: 900; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.1em; }
+        #fudge-val { font-family: monospace; color: var(--sky); font-weight: bold; font-size: 14px; }
+        input[type=range] { width: 100%; height: 8px; border-radius: 5px; background: #1e293b; accent-color: var(--sky); cursor: pointer; }
+
+        /* Results Display */
+        .group-header { font-size: 0.75rem; font-weight: 800; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.15em; margin: 2rem 0 0.75rem 0.2rem; border-left: 4px solid var(--slate-600); padding-left: 10px; }
+        
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; transition: transform 0.1s; }
+        .card:active { transform: scale(0.98); }
+        .card-active { border-color: var(--sky); background: rgba(14, 165, 233, 0.1); }
+        
+        .card-info { display: flex; flex-direction: column; }
+        .card-label { font-size: 14px; font-weight: 800; color: white; }
+        .card-sub { font-size: 10px; font-weight: 700; color: var(--slate-500); text-transform: uppercase; margin-top: 2px; }
+        .card-val { font-family: monospace; font-size: 1.5rem; font-weight: 700; color: var(--sky); }
+
+        /* Intensity Borders */
+        .border-red { border-left: 5px solid var(--red); }
+        .border-orange { border-left: 5px solid var(--orange); }
+        .border-yellow { border-left: 5px solid var(--yellow); }
+        .border-blue { border-left: 5px solid var(--blue); }
+        .border-green { border-left: 5px solid var(--green); }
+
+        .hidden { display: none; }
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .footer-link { font-size: 11px; color: var(--slate-400); font-weight: 800; text-transform: uppercase; text-decoration: none; letter-spacing: 0.1em; }
+        .credit { font-size: 9px; color: var(--slate-600); margin-top: 0.5rem; text-transform: uppercase; font-style: italic; }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>PACE <span class="sky-text">PRO</span></h1>
+            <button id="unit-toggle" class="btn-toggle">Units: Imperial (Miles)</button>
+        </header>
+
+        <div class="input-panel">
+            <select id="dist-select">
+                <option value="800">800m</option>
+                <option value="1600">1,600m</option>
+                <option value="3200">3,200m</option>
+                <option value="5000" selected>5,000m (5K)</option>
+                <option value="10000">10,000m (10K)</option>
+                <option value="21098">Half Marathon</option>
+                <option value="42195">Marathon</option>
+            </select>
+
+            <div class="time-row">
+                <div id="hr-wrap" class="hidden">
+                    <input type="number" id="hr" value="0" class="time-input" />
+                    <span class="colon">:</span>
+                </div>
+                <input type="number" id="min" value="18" class="time-input" />
+                <span class="colon">:</span>
+                <input type="number" id="sec" value="20" class="time-input" />
+            </div>
+
+            <div class="fudge-area">
+                <div class="fudge-header">
+                    <span class="fudge-label">Fudge Factor</span>
+                    <span id="fudge-val">0%</span>
+                </div>
+                <input type="range" id="fudge-slider" min="-5" max="5" value="0" step="1" />
+            </div>
+        </div>
+
+        <h2 class="group-header">Equivalent Race Results</h2>
+        <div id="equiv-list"></div>
+
+        <h2 class="group-header">Training Intensities</h2>
+        <div id="training-engine"></div>
+
+        <footer>
+            <a href="https://jaywyss.me" target="_blank" class="footer-link">Copyright © 2025 Jay Wyss, MPA</a>
+            <div class="credit">Thought Partner: Gemini</div>
+        </footer>
+    </main>
+
+    <script is:inline>
+        const distSelect = document.getElementById('dist-select');
+        const hrInput = document.getElementById('hr');
+        const minInput = document.getElementById('min');
+        const secInput = document.getElementById('sec');
+        const hrWrap = document.getElementById('hr-wrap');
+        const unitToggle = document.getElementById('unit-toggle');
+        const fudgeSlider = document.getElementById('fudge-slider');
+        const fudgeVal = document.getElementById('fudge-val');
+
+        let isMetric = false;
+
+        const RACE_MAP = [
+            { name: "800m", factor: 0.12818 }, { name: "1,600m", factor: 0.2800 },
+            { name: "3,200m", factor: 0.60818 }, { name: "5,000m", factor: 1.0 },
+            { name: "10,000m", factor: 2.1 }, { name: "Half Marathon", factor: 4.6418 },
+            { name: "Marathon", factor: 9.7045 }
+        ];
+
+        const TRAINING_MAP = [
+            { name: "800m Reps", sub: "Per 400m", factor: 0.80 / 4, type: 'intense' },
+            { name: "1,600m Reps", sub: "Per 400m", factor: 0.875 / 4, type: 'intense' },
+            { name: "3,200m Reps", sub: "Per 400m", factor: 0.95 / 4, type: 'intense' },
+            { name: "5,000m Reps", sub: "Per 400m", factor: 1.0 / 4, type: 'intense' },
+            { name: "Critical Velocity", factor: 1.025, type: 'threshold' },
+            { name: "10,000m Pace", factor: 1.05, type: 'threshold' },
+            { name: "Threshold (T)", factor: 1.075, type: 'threshold' },
+            { name: "Half Marathon", factor: 1.10, type: 'tempo' },
+            { name: "Marathon", factor: 1.15, type: 'tempo' },
+            { name: "GAP (High)", factor: 1.20, type: 'aerobic' },
+            { name: "GAP (Low)", factor: 1.40, type: 'aerobic' },
+            { name: "Pretty Easy", factor: 1.50, type: 'easy' },
+            { name: "Easy", factor: 1.60, type: 'easy' },
+            { name: "Very Easy", factor: 1.70, type: 'easy' },
+            { name: "Regeneration", factor: 1.80, type: 'easy' }
+        ];
+
+        function formatTime(s) {
+            s = Math.round(s);
+            const h = Math.floor(s / 3600);
+            const m = Math.floor((s % 3600) / 60);
+            const sec = s % 60;
+            return h > 0 ? `${h}:${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}` : `${m}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        function update() {
+            parseInt(distSelect.value) > 10000 ? hrWrap.classList.remove('hidden') : hrWrap.classList.add('hidden');
+            const fudge = 1 + (parseFloat(fudgeSlider.value) / 100);
+            fudgeVal.innerText = (fudgeSlider.value > 0 ? "+" : "") + fudgeSlider.value + "%";
+
+            const inputSecs = (parseInt(hrInput.value || 0) * 3600) + (parseInt(minInput.value || 0) * 60) + parseInt(secInput.value || 0);
+            const selectedDist = parseInt(distSelect.value);
+            const foundRace = RACE_MAP.find(r => r.factor.toString().includes(selectedDist) || (selectedDist === 5000 && r.factor === 1.0) || (selectedDist === 21098 && r.name === "Half Marathon") || (selectedDist === 42195 && r.name === "Marathon"));
+            const anchorSecs = inputSecs / (foundRace ? foundRace.factor : 1);
+
+            document.getElementById('equiv-list').innerHTML = RACE_MAP.map(r => `
+                <div class="card ${Math.abs(anchorSecs * r.factor - inputSecs) < 1 ? 'card-active' : ''}">
+                    <span class="card-label" style="color: var(--slate-400)">${r.name}</span>
+                    <span class="card-val">${formatTime((anchorSecs * r.factor) * fudge)}</span>
+                </div>`).join('');
+
+            const unitBase = anchorSecs / (isMetric ? 5.00 : 3.11);
+            document.getElementById('training-engine').innerHTML = TRAINING_MAP.map(item => {
+                const val = (unitBase * item.factor) * fudge;
+                let c = 'var(--sky)', b = 'border-slate';
+                if (item.type === 'intense') { c = 'var(--red)'; b = 'border-red'; }
+                if (item.type === 'threshold') { c = 'var(--orange)'; b = 'border-orange'; }
+                if (item.type === 'tempo') { c = 'var(--yellow)'; b = 'border-yellow'; }
+                if (item.type === 'aerobic') { c = 'var(--blue)'; b = 'border-blue'; }
+                if (item.type === 'easy') { c = 'var(--green)'; b = 'border-green'; }
+                
+                return `
+                    <div class="card ${b}">
+                        <div class="card-info">
+                            <span class="card-label">${item.name}</span>
+                            <span class="card-sub">${item.type === 'intense' ? item.sub : 'Pace /' + (isMetric ? 'km' : 'mi')}</span>
+                        </div>
+                        <span class="card-val" style="color: ${c}">${formatTime(val)}</span>
+                    </div>`;
+            }).join('');
+        }
+
+        unitToggle.addEventListener('click', () => { 
+            isMetric = !isMetric; 
+            unitToggle.innerText = `Units: ${isMetric ? 'Metric (KM)' : 'Imperial (Miles)'}`;
+            unitToggle.classList.toggle('metric');
+            update(); 
+        });
+        [distSelect, hrInput, minInput, secInput, fudgeSlider].forEach(el => el.addEventListener('input', update));
+        update();
+    </script>
+</body>
+</html>
