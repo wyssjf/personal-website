@@ -1,6 +1,6 @@
 ---
 // Pace Pro | Precision Training Engine
-// Final Isolation Build for Jay Wyss, MPA
+// Complete Style Isolation Build for Jay Wyss, MPA
 ---
 
 <!DOCTYPE html>
@@ -8,136 +8,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Pace Pro | Precision Training Engine</title>
-    
+    <title>Pace Pro | J.R. Tucker Varsity</title>
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#020617" />
-    <link rel="apple-touch-icon" href="/icon-192x192.png" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-
-    <style is:global>
-        /* CSS Reset to prevent portfolio styles from leaking in */
-        #pace-pro-root, #pace-pro-root * {
-            box-sizing: border-box !important;
-            margin: 0;
-            padding: 0;
-            border: 0;
-        }
-
-        :root {
-            --bg-pro: #020617;
-            --card-pro: #0f172a;
-            --border-pro: #1e293b;
-            --sky-pro: #38bdf8;
-            --slate-pro: #94a3b8;
-            --red-pro: #ef4444;
-            --orange-pro: #f97316;
-            --yellow-pro: #facc15;
-            --blue-pro: #3b82f6;
-            --green-pro: #22c55e;
-        }
-
-        body {
-            background-color: var(--bg-pro) !important;
-            color: white !important;
-            font-family: -apple-system, system-ui, sans-serif !important;
-            display: flex !important;
-            justify-content: center !important;
-            min-height: 100vh !important;
-        }
-
-        #pace-pro-root {
-            width: 100% !important;
-            max-width: 420px !important;
-            padding: 20px !important;
-        }
-
-        .header-pro { text-align: center !important; margin-bottom: 24px !important; }
-        .title-pro { font-size: 42px !important; font-weight: 900 !important; font-style: italic !important; color: white !important; letter-spacing: -2px !important; text-transform: uppercase !important; }
-        .sky-pro { color: var(--sky-pro) !important; }
-
-        .unit-btn { 
-            background: #1e293b !important; 
-            color: var(--sky-pro) !important; 
-            border: 1px solid var(--border-pro) !important; 
-            padding: 8px 20px !important; 
-            border-radius: 30px !important; 
-            font-size: 11px !important; 
-            font-weight: 800 !important; 
-            text-transform: uppercase !important; 
-            margin-top: 15px !important; 
-            cursor: pointer !important;
-        }
-
-        .panel-pro { 
-            background: var(--card-pro) !important; 
-            border: 2px solid var(--border-pro) !important; 
-            border-radius: 16px !important; 
-            padding: 24px !important; 
-            margin-bottom: 30px !important;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
-        }
-        
-        .select-pro { 
-            width: 100% !important; 
-            background: #1e293b !important; 
-            color: white !important; 
-            border: 1px solid var(--border-pro) !important; 
-            border-radius: 8px !important; 
-            padding: 12px !important; 
-            font-size: 14px !important; 
-            font-weight: 700 !important; 
-            margin-bottom: 20px !important; 
-        }
-
-        .time-row { display: flex !important; justify-content: center !important; align-items: baseline !important; gap: 8px !important; margin-bottom: 20px !important; }
-        .input-pro { background: transparent !important; border: none !important; border-bottom: 3px solid var(--border-pro) !important; color: white !important; font-size: 58px !important; font-weight: 900 !important; width: 85px !important; text-align: center !important; outline: none !important; }
-        .input-pro:focus { border-color: var(--sky-pro) !important; }
-        .colon-pro { font-size: 36px !important; font-weight: 900 !important; color: #334155 !important; }
-
-        .fudge-label { display: flex !important; justify-content: space-between !important; font-size: 11px !important; font-weight: 800 !important; color: var(--slate-pro) !important; text-transform: uppercase !important; margin-bottom: 8px !important; }
-        .slider-pro { width: 100% !important; height: 8px !important; border-radius: 5px !important; background: var(--border-pro) !important; accent-color: var(--sky-pro) !important; cursor: pointer !important; }
-
-        .group-tag { font-size: 12px !important; font-weight: 800 !important; color: var(--slate-pro) !important; text-transform: uppercase !important; margin: 30px 0 12px 0 !important; border-left: 4px solid #334155 !important; padding-left: 10px !important; }
-        
-        .card-pro { 
-            background: var(--card-pro) !important; 
-            border: 1px solid var(--border-pro) !important; 
-            border-radius: 10px !important; 
-            padding: 16px !important; 
-            margin-bottom: 10px !important; 
-            display: flex !important; 
-            justify-content: space-between !important; 
-            align-items: center !important;
-            border-left: 5px solid transparent !important;
-        }
-        .active-pro { border-color: var(--sky-pro) !important; background: rgba(56, 189, 248, 0.1) !important; }
-        
-        .label-wrap { display: flex !important; flex-direction: column !important; }
-        .text-main { font-size: 15px !important; font-weight: 700 !important; color: white !important; }
-        .text-sub { font-size: 10px !important; color: var(--slate-pro) !important; text-transform: uppercase !important; font-weight: 800 !important; margin-top: 2px !important; }
-        .val-pro { font-family: monospace !important; font-size: 24px !important; font-weight: 700 !important; color: var(--sky-pro) !important; }
-
-        .red-pro { border-left-color: var(--red-pro) !important; }
-        .orange-pro { border-left-color: var(--orange-pro) !important; }
-        .yellow-pro { border-left-color: var(--yellow-pro) !important; }
-        .blue-pro { border-left-color: var(--blue-pro) !important; }
-        .green-pro { border-left-color: var(--green-pro) !important; }
-
-        .hidden { display: none !important; }
-        footer { margin-top: 50px !important; padding-top: 20px !important; border-top: 1px solid var(--border-pro) !important; text-align: center !important; }
-        .foot-link { font-size: 11px !important; color: var(--slate-pro) !important; text-decoration: none !important; font-weight: 700 !important; text-transform: uppercase !important; }
-    </style>
 </head>
-<body>
-    <div id="pace-pro-root">
-        <header class="header-pro">
-            <h1 class="title-pro">PACE <span class="sky-pro">PRO</span></h1>
-            <button id="unit-toggle" class="unit-btn">Units: Imperial (Miles)</button>
+<body id="pace-pro-app">
+    <div class="wrapper">
+        <header>
+            <h1>PACE <span class="sky">PRO</span></h1>
+            <button id="unit-toggle" class="toggle-btn">Units: Imperial (Miles)</button>
         </header>
 
-        <div class="panel-pro">
-            <select id="dist-select" class="select-pro">
+        <section class="control-panel">
+            <select id="dist-select" class="main-select">
                 <option value="800">800m</option>
                 <option value="1600">1,600m</option>
                 <option value="3200">3,200m</option>
@@ -147,125 +30,175 @@
                 <option value="42195">Marathon</option>
             </select>
 
-            <div class="time-row">
+            <div class="time-display">
                 <div id="hr-wrap" class="hidden">
-                    <input type="number" id="hr" value="0" class="input-pro" />
-                    <span class="colon-pro">:</span>
+                    <input type="number" id="hr" value="0" class="t-input" />
+                    <span class="sep">:</span>
                 </div>
-                <input type="number" id="min" value="18" class="input-pro" />
-                <span class="colon-pro">:</span>
-                <input type="number" id="sec" value="20" class="input-pro" />
+                <input type="number" id="min" value="18" class="t-input" />
+                <span class="sep">:</span>
+                <input type="number" id="sec" value="20" class="t-input" />
             </div>
 
-            <div class="fudge-label">
-                <span>Fudge Factor</span>
-                <span id="fudge-val" class="sky-pro">0%</span>
+            <div class="fudge-box">
+                <div class="f-header">
+                    <span>Fudge Factor</span>
+                    <span id="fudge-val">0%</span>
+                </div>
+                <input type="range" id="fudge-slider" min="-5" max="5" value="0" step="1" />
             </div>
-            <input type="range" id="fudge-slider" class="slider-pro" min="-5" max="5" value="0" step="1" />
-        </div>
+        </section>
 
-        <h2 class="group-tag">Equivalent Race Results</h2>
-        <div id="equiv-list"></div>
+        <h2 class="section-label">Equivalent Race Results</h2>
+        <div id="equiv-list" class="list-container"></div>
 
-        <h2 class="group-tag">Training Intensities</h2>
-        <div id="training-engine"></div>
+        <h2 class="section-label">Training Intensities</h2>
+        <div id="training-engine" class="list-container"></div>
 
         <footer>
-            <a href="https://jaywyss.me" target="_blank" class="foot-link">Copyright © 2025 Jay Wyss, MPA</a>
+            <a href="https://jaywyss.me" class="copy-link">© 2025 Jay Wyss, MPA</a>
+            <div class="partner">Thought Partner: Gemini</div>
         </footer>
     </div>
 
+    <style is:global>
+        /* This forces the app to ignore outside styles */
+        html, body#pace-pro-app {
+            background-color: #020617 !important;
+            color: #ffffff !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: system-ui, -apple-system, sans-serif !important;
+        }
+
+        #pace-pro-app .wrapper {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        #pace-pro-app h1 { font-size: 48px; font-weight: 900; font-style: italic; text-align: center; margin: 20px 0 10px; letter-spacing: -2px; }
+        #pace-pro-app .sky { color: #38bdf8; }
+        
+        #pace-pro-app .toggle-btn { display: block; margin: 0 auto 30px; background: #1e293b; color: #38bdf8; border: 1px solid #334155; padding: 8px 18px; border-radius: 20px; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+
+        #pace-pro-app .control-panel { background: #0f172a; border: 2px solid #1e293b; border-radius: 16px; padding: 24px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        #pace-pro-app .main-select { width: 100%; background: #1e293b; color: white; border: 1px solid #334155; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; margin-bottom: 20px; }
+
+        #pace-pro-app .time-display { display: flex; justify-content: center; align-items: baseline; gap: 5px; margin-bottom: 20px; }
+        #pace-pro-app .t-input { background: transparent; border: none; border-bottom: 3px solid #334155; color: white; font-size: 64px; font-weight: 900; width: 90px; text-align: center; outline: none; }
+        #pace-pro-app .sep { font-size: 32px; font-weight: 900; color: #475569; }
+
+        #pace-pro-app .f-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 8px; }
+        #pace-pro-app input[type=range] { width: 100%; accent-color: #38bdf8; cursor: pointer; }
+
+        #pace-pro-app .section-label { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin: 30px 0 12px 10px; border-left: 4px solid #334155; padding-left: 10px; }
+        
+        #pace-pro-app .card-box { background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 15px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid transparent; }
+        #pace-pro-app .card-box.active { border-color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+        
+        #pace-pro-app .label-col { display: flex; flex-direction: column; }
+        #pace-pro-app .main-lbl { font-size: 15px; font-weight: 700; color: white; }
+        #pace-pro-app .sub-lbl { font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: 800; margin-top: 2px; }
+        #pace-pro-app .pace-val { font-family: monospace; font-size: 24px; font-weight: 700; color: #38bdf8; }
+
+        #pace-pro-app .red-b { border-left-color: #ef4444; }
+        #pace-pro-app .orange-b { border-left-color: #f97316; }
+        #pace-pro-app .yellow-b { border-left-color: #facc15; }
+        #pace-pro-app .blue-b { border-left-color: #3b82f6; }
+        #pace-pro-app .green-b { border-left-color: #22c55e; }
+
+        #pace-pro-app .hidden { display: none; }
+        #pace-pro-app footer { margin-top: 50px; padding: 20px 0; border-top: 1px solid #1e293b; text-align: center; }
+        #pace-pro-app .copy-link { font-size: 11px; color: #94a3b8; text-decoration: none; font-weight: 700; text-transform: uppercase; }
+        #pace-pro-app .partner { font-size: 9px; color: #475569; margin-top: 5px; font-style: italic; }
+    </style>
+
     <script is:inline>
-        const distSelect = document.getElementById('dist-select');
-        const hrInput = document.getElementById('hr');
-        const minInput = document.getElementById('min');
-        const secInput = document.getElementById('sec');
-        const hrWrap = document.getElementById('hr-wrap');
-        const unitToggle = document.getElementById('unit-toggle');
-        const fudgeSlider = document.getElementById('fudge-slider');
-        const fudgeVal = document.getElementById('fudge-val');
+        const dSel = document.getElementById('dist-select');
+        const hIn = document.getElementById('hr');
+        const mIn = document.getElementById('min');
+        const sIn = document.getElementById('sec');
+        const hWrap = document.getElementById('hr-wrap');
+        const uTog = document.getElementById('unit-toggle');
+        const fSli = document.getElementById('fudge-slider');
+        const fVal = document.getElementById('fudge-val');
 
-        let isMetric = false;
+        let isM = false;
 
-        const RACE_MAP = [
-            { name: "800m", factor: 0.12818 }, { name: "1,600m", factor: 0.2800 },
-            { name: "3,200m", factor: 0.60818 }, { name: "5,000m", factor: 1.0 },
-            { name: "10,000m", factor: 2.1 }, { name: "Half Marathon", factor: 4.6418 },
-            { name: "Marathon", factor: 9.7045 }
+        const R_MAP = [
+            { n: "800m", f: 0.12818 }, { n: "1,600m", f: 0.2800 },
+            { n: "3,200m", f: 0.60818 }, { n: "5,000m", f: 1.0 },
+            { n: "10,000m", f: 2.1 }, { n: "Half Marathon", f: 4.6418 },
+            { n: "Marathon", f: 9.7045 }
         ];
 
-        const TRAINING_MAP = [
-            { name: "800m Reps", sub: "Per 400m", factor: 0.80 / 4, type: 'intense' },
-            { name: "1,600m Reps", sub: "Per 400m", factor: 0.875 / 4, type: 'intense' },
-            { name: "3,200m Reps", sub: "Per 400m", factor: 0.95 / 4, type: 'intense' },
-            { name: "5,000m Reps", sub: "Per 400m", factor: 1.0 / 4, type: 'intense' },
-            { name: "Critical Velocity", factor: 1.025, type: 'threshold' },
-            { name: "10,000m", factor: 1.05, type: 'threshold' },
-            { name: "Threshold", factor: 1.075, type: 'threshold' },
-            { name: "Half Marathon", factor: 1.10, type: 'tempo' },
-            { name: "Marathon", factor: 1.15, type: 'tempo' },
-            { name: "GAP (High)", factor: 1.20, type: 'aerobic' },
-            { name: "GAP (Low)", factor: 1.40, type: 'aerobic' },
-            { name: "Pretty Easy", factor: 1.50, type: 'easy' },
-            { name: "Easy", factor: 1.60, type: 'easy' },
-            { name: "Very Easy", factor: 1.70, type: 'easy' },
-            { name: "Regeneration", factor: 1.80, type: 'easy' }
+        const T_MAP = [
+            { n: "800m Reps", s: "Per 400m", f: 0.80 / 4, t: 'red' },
+            { n: "1,600m Reps", s: "Per 400m", f: 0.875 / 4, t: 'red' },
+            { n: "3,200m Reps", s: "Per 400m", f: 0.95 / 4, t: 'red' },
+            { n: "5,000m Reps", s: "Per 400m", f: 1.0 / 4, t: 'red' },
+            { n: "Critical Velocity", f: 1.025, t: 'orange' },
+            { n: "10,000m", f: 1.05, t: 'orange' },
+            { n: "Threshold", f: 1.075, t: 'orange' },
+            { n: "Half Marathon", f: 1.10, t: 'yellow' },
+            { n: "Marathon", f: 1.15, t: 'yellow' },
+            { n: "GAP (High)", f: 1.20, t: 'blue' },
+            { n: "GAP (Low)", f: 1.40, t: 'blue' },
+            { n: "Pretty Easy", f: 1.50, t: 'green' },
+            { n: "Easy", f: 1.60, t: 'green' },
+            { n: "Very Easy", f: 1.70, t: 'green' },
+            { n: "Regeneration", f: 1.80, t: 'green' }
         ];
 
-        function formatTime(s) {
+        function fmt(s) {
             s = Math.round(s);
             const h = Math.floor(s / 3600);
             const m = Math.floor((s % 3600) / 60);
-            const sec = s % 60;
-            return h > 0 ? `${h}:${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}` : `${m}:${sec.toString().padStart(2, '0')}`;
+            const sc = s % 60;
+            return h > 0 ? `${h}:${m.toString().padStart(2, '0')}:${sc.toString().padStart(2, '0')}` : `${m}:${sc.toString().padStart(2, '0')}`;
         }
 
-        function update() {
-            parseInt(distSelect.value) > 10000 ? hrWrap.classList.remove('hidden') : hrWrap.classList.add('hidden');
-            const fudge = 1 + (parseFloat(fudgeSlider.value) / 100);
-            fudgeVal.innerText = (fudgeSlider.value > 0 ? "+" : "") + fudgeSlider.value + "%";
+        function run() {
+            parseInt(dSel.value) > 10000 ? hWrap.classList.remove('hidden') : hWrap.classList.add('hidden');
+            const fudge = 1 + (parseFloat(fSli.value) / 100);
+            fVal.innerText = (fSli.value > 0 ? "+" : "") + fSli.value + "%";
 
-            const inputSecs = (parseInt(hrInput.value || 0) * 3600) + (parseInt(minInput.value || 0) * 60) + parseInt(secInput.value || 0);
-            const foundRace = RACE_MAP.find(r => r.factor.toString().includes(distSelect.value) || (distSelect.value == "5000" && r.factor === 1.0));
-            const anchorSecs = inputSecs / (foundRace ? foundRace.factor : 1);
+            const inS = (parseInt(hIn.value || 0) * 3600) + (parseInt(mIn.value || 0) * 60) + parseInt(sIn.value || 0);
+            const found = R_MAP.find(r => r.f.toString().includes(dSel.value) || (dSel.value == "5000" && r.f === 1.0));
+            const anchor = inS / (found ? found.f : 1);
 
-            document.getElementById('equiv-list').innerHTML = RACE_MAP.map(r => `
-                <div class="card-pro ${Math.abs(anchorSecs * r.factor - inputSecs) < 1 ? 'active-pro' : ''}">
-                    <span class="text-sub">${r.name}</span>
-                    <span class="val-pro">${formatTime((anchorSecs * r.factor) * fudge)}</span>
+            document.getElementById('equiv-list').innerHTML = R_MAP.map(r => `
+                <div class="card-box ${Math.abs(anchor * r.f - inS) < 1 ? 'active' : ''}">
+                    <span class="sub-lbl">${r.n}</span>
+                    <span class="pace-val">${fmt((anchor * r.f) * fudge)}</span>
                 </div>`).join('');
 
-            const unitBase = anchorSecs / (isMetric ? 5.00 : 3.11);
-            document.getElementById('training-engine').innerHTML = TRAINING_MAP.map(item => {
-                const val = (unitBase * item.factor) * fudge;
-                let c = '#38bdf8', b = '';
-                if (item.type === 'intense') { c = '#ef4444'; b = 'red-pro'; }
-                if (item.type === 'threshold') { c = '#f97316'; b = 'orange-pro'; }
-                if (item.type === 'tempo') { c = '#facc15'; b = 'yellow-pro'; }
-                if (item.type === 'aerobic') { c = '#3b82f6'; b = 'blue-pro'; }
-                if (item.type === 'easy') { c = '#22c55e'; b = 'green-pro'; }
+            const uB = anchor / (isM ? 5.00 : 3.11);
+            document.getElementById('training-engine').innerHTML = T_MAP.map(item => {
+                const val = (uB * item.f) * fudge;
+                let c = '#38bdf8';
+                if (item.t === 'red') c = '#ef4444';
+                if (item.t === 'orange') c = '#f97316';
+                if (item.t === 'yellow') c = '#facc15';
+                if (item.t === 'blue') c = '#3b82f6';
+                if (item.t === 'green') c = '#22c55e';
                 return `
-                    <div class="card-pro ${b}">
-                        <div class="label-wrap">
-                            <span class="text-main">${item.name}</span>
-                            <span class="text-sub">${item.type === 'intense' ? item.sub : 'Pace /' + (isMetric ? 'km' : 'mi')}</span>
+                    <div class="card-box ${item.t}-b">
+                        <div class="label-col">
+                            <span class="main-lbl">${item.n}</span>
+                            <span class="sub-lbl">${item.t === 'red' ? item.s : 'Pace /' + (isM ? 'km' : 'mi')}</span>
                         </div>
-                        <span class="val-pro" style="color: ${c} !important;">${formatTime(val)}</span>
+                        <span class="pace-val" style="color: ${c} !important;">${fmt(val)}</span>
                     </div>`;
             }).join('');
         }
 
-        unitToggle.addEventListener('click', () => { 
-            isMetric = !isMetric; 
-            unitToggle.innerText = `Units: ${isMetric ? 'Metric (KM)' : 'Imperial (Miles)'}`;
-            update(); 
-        });
-        [distSelect, hrInput, minInput, secInput, fudgeSlider].forEach(el => el.addEventListener('input', update));
-        update();
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); });
-        }
+        uTog.addEventListener('click', () => { isM = !isM; uTog.innerText = `Units: ${isM ? 'Metric (KM)' : 'Imperial (Miles)'}`; run(); });
+        [dSel, hIn, mIn, sIn, fSli].forEach(e => e.addEventListener('input', run));
+        run();
     </script>
 </body>
 </html>
