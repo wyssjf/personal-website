@@ -1,6 +1,6 @@
 ---
 // Pace Pro | Precision Training Engine
-// Calibrated for Jay Wyss, MPA
+// Standalone Build for Jay Wyss, MPA
 ---
 
 <!DOCTYPE html>
@@ -21,9 +21,9 @@
             --bg: #020617;
             --card: #0f172a;
             --border: #1e293b;
-            --sky: #0ea5e9;
+            --sky: #38bdf8;
             --slate-400: #94a3b8;
-            --slate-500: #64748b;
+            --slate-600: #334155;
             --red: #ef4444;
             --orange: #f97316;
             --yellow: #facc15;
@@ -34,67 +34,69 @@
         body {
             background-color: var(--bg);
             color: white;
-            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 1rem;
-            line-height: 1.5;
-            -webkit-tap-highlight-color: transparent;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
         }
 
-        .container { max-width: 448px; margin: 0 auto; padding-bottom: 5rem; }
+        .container { width: 100%; max-width: 400px; padding-bottom: 80px; }
 
-        /* Header */
-        h1 { text-align: center; font-size: 2.5rem; font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: -0.05em; margin: 1.5rem 0 0.5rem; }
+        /* Header Styles */
+        header { text-align: center; margin-bottom: 24px; }
+        h1 { font-size: 40px; font-weight: 900; font-style: italic; margin: 0; text-transform: uppercase; letter-spacing: -2px; }
         .sky-text { color: var(--sky); }
-        .btn-toggle { display: block; margin: 0 auto 2rem; background: #1e293b; color: var(--sky); border: 1px solid var(--border); padding: 0.5rem 1.25rem; border-radius: 9999px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; }
-        .btn-toggle.metric { color: #a3e635; border-color: #a3e63544; }
+        .unit-btn { background: #1e293b; color: var(--sky); border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; margin-top: 12px; cursor: pointer; }
 
-        /* Input Section */
-        .input-panel { background: var(--card); border: 2px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
+        /* Input Panel */
+        .input-panel { background: var(--card); border: 2px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 32px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); }
         
-        select { width: 100%; background: #1e293b; color: white; border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem; font-size: 14px; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; outline: none; }
+        select { width: 100%; background: #1e293b; color: white; border: 1px solid var(--border); border-radius: 6px; padding: 10px; font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; -webkit-appearance: none; }
 
-        .time-row { display: flex; justify-content: center; align-items: center; gap: 0.25rem; margin-bottom: 1.5rem; }
-        .time-input { background: transparent; border: none; border-bottom: 3px solid var(--border); color: white; font-size: 4rem; font-weight: 900; width: 5.5rem; text-align: center; outline: none; }
+        .time-row { display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-bottom: 20px; }
+        .time-input { background: transparent; border: none; border-bottom: 3px solid var(--border); color: white; font-size: 60px; font-weight: 900; width: 85px; text-align: center; outline: none; }
         .time-input:focus { border-color: var(--sky); }
-        .colon { font-size: 2.5rem; font-weight: 900; color: var(--slate-600); padding-bottom: 10px; }
+        .colon { font-size: 36px; font-weight: 900; color: var(--slate-600); }
 
         /* Fudge Slider */
-        .fudge-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-        .fudge-label { font-size: 11px; font-weight: 900; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.1em; }
-        #fudge-val { font-family: monospace; color: var(--sky); font-weight: bold; font-size: 14px; }
-        input[type=range] { width: 100%; height: 8px; border-radius: 5px; background: #1e293b; accent-color: var(--sky); cursor: pointer; }
+        .fudge-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: var(--slate-400); text-transform: uppercase; margin-bottom: 6px; }
+        input[type=range] { width: 100%; height: 6px; border-radius: 5px; background: var(--border); accent-color: var(--sky); cursor: pointer; }
 
-        /* Results Display */
-        .group-header { font-size: 0.75rem; font-weight: 800; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.15em; margin: 2rem 0 0.75rem 0.2rem; border-left: 4px solid var(--slate-600); padding-left: 10px; }
+        /* Cards */
+        .group-header { font-size: 12px; font-weight: 800; color: var(--slate-400); text-transform: uppercase; margin: 24px 0 12px 0; border-left: 4px solid var(--slate-600); padding-left: 10px; }
         
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; transition: transform 0.1s; }
-        .card:active { transform: scale(0.98); }
-        .card-active { border-color: var(--sky); background: rgba(14, 165, 233, 0.1); }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid transparent; }
+        .card-active { border-color: var(--sky); background: rgba(56, 189, 248, 0.1); }
         
-        .card-info { display: flex; flex-direction: column; }
-        .card-label { font-size: 14px; font-weight: 800; color: white; }
-        .card-sub { font-size: 10px; font-weight: 700; color: var(--slate-500); text-transform: uppercase; margin-top: 2px; }
-        .card-val { font-family: monospace; font-size: 1.5rem; font-weight: 700; color: var(--sky); }
+        .label-stack { display: flex; flex-direction: column; }
+        .card-label { font-size: 14px; font-weight: 700; }
+        .card-sub { font-size: 10px; color: var(--slate-400); text-transform: uppercase; margin-top: 2px; font-weight: 600; }
+        .card-val { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 24px; font-weight: 700; color: var(--sky); }
 
-        /* Intensity Borders */
-        .border-red { border-left: 5px solid var(--red); }
-        .border-orange { border-left: 5px solid var(--orange); }
-        .border-yellow { border-left: 5px solid var(--yellow); }
-        .border-blue { border-left: 5px solid var(--blue); }
-        .border-green { border-left: 5px solid var(--green); }
+        /* Intensity Classes */
+        .red-pace { border-left-color: var(--red); }
+        .red-text { color: var(--red); }
+        .orange-pace { border-left-color: var(--orange); }
+        .orange-text { color: var(--orange); }
+        .yellow-pace { border-left-color: var(--yellow); }
+        .yellow-text { color: var(--yellow); }
+        .blue-pace { border-left-color: var(--blue); }
+        .blue-text { color: var(--blue); }
+        .green-pace { border-left-color: var(--green); }
+        .green-text { color: var(--green); }
 
         .hidden { display: none; }
-        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
-        .footer-link { font-size: 11px; color: var(--slate-400); font-weight: 800; text-transform: uppercase; text-decoration: none; letter-spacing: 0.1em; }
-        .credit { font-size: 9px; color: var(--slate-600); margin-top: 0.5rem; text-transform: uppercase; font-style: italic; }
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; }
+        .footer-link { font-size: 11px; color: var(--slate-400); text-decoration: none; font-weight: 700; text-transform: uppercase; }
+        .gemmy-credit { font-size: 9px; color: var(--slate-600); margin-top: 4px; font-style: italic; text-transform: uppercase; }
     </style>
 </head>
 <body>
     <main class="container">
         <header>
             <h1>PACE <span class="sky-text">PRO</span></h1>
-            <button id="unit-toggle" class="btn-toggle">Units: Imperial (Miles)</button>
+            <button id="unit-toggle" class="unit-btn">Units: Imperial (Miles)</button>
         </header>
 
         <div class="input-panel">
@@ -120,8 +122,8 @@
 
             <div class="fudge-area">
                 <div class="fudge-header">
-                    <span class="fudge-label">Fudge Factor</span>
-                    <span id="fudge-val">0%</span>
+                    <span>Fudge Factor</span>
+                    <span id="fudge-val" class="sky-text">0%</span>
                 </div>
                 <input type="range" id="fudge-slider" min="-5" max="5" value="0" step="1" />
             </div>
@@ -135,7 +137,7 @@
 
         <footer>
             <a href="https://jaywyss.me" target="_blank" class="footer-link">Copyright © 2025 Jay Wyss, MPA</a>
-            <div class="credit">Thought Partner: Gemini</div>
+            <div class="gemmy-credit">Thought Partner: Gemini</div>
         </footer>
     </main>
 
@@ -164,8 +166,8 @@
             { name: "3,200m Reps", sub: "Per 400m", factor: 0.95 / 4, type: 'intense' },
             { name: "5,000m Reps", sub: "Per 400m", factor: 1.0 / 4, type: 'intense' },
             { name: "Critical Velocity", factor: 1.025, type: 'threshold' },
-            { name: "10,000m Pace", factor: 1.05, type: 'threshold' },
-            { name: "Threshold (T)", factor: 1.075, type: 'threshold' },
+            { name: "10,000m", factor: 1.05, type: 'threshold' },
+            { name: "Threshold", factor: 1.075, type: 'threshold' },
             { name: "Half Marathon", factor: 1.10, type: 'tempo' },
             { name: "Marathon", factor: 1.15, type: 'tempo' },
             { name: "GAP (High)", factor: 1.20, type: 'aerobic' },
@@ -203,20 +205,19 @@
             const unitBase = anchorSecs / (isMetric ? 5.00 : 3.11);
             document.getElementById('training-engine').innerHTML = TRAINING_MAP.map(item => {
                 const val = (unitBase * item.factor) * fudge;
-                let c = 'var(--sky)', b = 'border-slate';
-                if (item.type === 'intense') { c = 'var(--red)'; b = 'border-red'; }
-                if (item.type === 'threshold') { c = 'var(--orange)'; b = 'border-orange'; }
-                if (item.type === 'tempo') { c = 'var(--yellow)'; b = 'border-yellow'; }
-                if (item.type === 'aerobic') { c = 'var(--blue)'; b = 'border-blue'; }
-                if (item.type === 'easy') { c = 'var(--green)'; b = 'border-green'; }
-                
+                let c = 'sky-text', b = '';
+                if (item.type === 'intense') { c = 'red-text'; b = 'red-pace'; }
+                if (item.type === 'threshold') { c = 'orange-text'; b = 'orange-pace'; }
+                if (item.type === 'tempo') { c = 'yellow-text'; b = 'yellow-pace'; }
+                if (item.type === 'aerobic') { c = 'blue-text'; b = 'blue-pace'; }
+                if (item.type === 'easy') { c = 'green-text'; b = 'green-pace'; }
                 return `
                     <div class="card ${b}">
-                        <div class="card-info">
+                        <div class="label-stack">
                             <span class="card-label">${item.name}</span>
                             <span class="card-sub">${item.type === 'intense' ? item.sub : 'Pace /' + (isMetric ? 'km' : 'mi')}</span>
                         </div>
-                        <span class="card-val" style="color: ${c}">${formatTime(val)}</span>
+                        <span class="card-val ${c}">${formatTime(val)}</span>
                     </div>`;
             }).join('');
         }
@@ -229,6 +230,12 @@
         });
         [distSelect, hrInput, minInput, secInput, fudgeSlider].forEach(el => el.addEventListener('input', update));
         update();
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
     </script>
 </body>
 </html>
